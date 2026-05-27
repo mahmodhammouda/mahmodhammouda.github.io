@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahmod Hammouda — Archive</title>
+<meta name="description" content="Mahmod Hammouda — Strategist, chess player, IB student. Building toward something that matters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #0A0A08;
+    --paper: #F5F1E8;
+    --paper-2: #EDE7D8;
+    --paper-3: #E2DBC8;
+    --gold: #B8924D;
+    --gold-dark: #8B6E2E;
+    --gold-light: #D4B872;
+    --rust: #8B3A1F;
+    --olive: #5A5938;
+    --shadow: rgba(10,10,8,0.08);
+    --ink-light: #2A2A24;
+    --ink-mute: #6B6A5E;
+    --ink-faint: #9C9A8B;
+    --line: rgba(10,10,8,0.12);
+    --line-soft: rgba(10,10,8,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Fraunces', serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+    line-height: 1.5;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--ink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring.hover { width: 56px; height: 56px; opacity: 0.4; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 1.75rem 3rem;
+    background: rgba(245,241,232,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--line);
+  }
+  .nav-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+  .nav-mark span { color: var(--gold-dark); }
+  .nav-center {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+  }
+  .nav-center a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+  .nav-center a:hover { color: var(--ink); }
+  .nav-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-align: right;
+    text-transform: uppercase;
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--rust);
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem 3rem 4rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: end;
+    height: 100%;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 70vh;
+  }
+
+  .hero-top-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 2rem;
+  }
+
+  .hero-top-meta-block { display: flex; flex-direction: column; gap: 0.35rem; }
+  .hero-top-meta-block .label { color: var(--ink-faint); }
+  .hero-top-meta-block .val { color: var(--ink); }
+
+  h1.display {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(4rem, 11vw, 12rem);
+    line-height: 0.86;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+    font-variation-settings: "opsz" 144;
+  }
+  h1.display .italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-dark);
+  }
+  h1.display .small {
+    display: block;
+    font-size: 0.25em;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mute);
+    letter-spacing: 0;
+    margin-top: 1rem;
+    line-height: 1.4;
+    max-width: 600px;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 3rem;
+    gap: 3rem;
+  }
+
+  .hero-intro {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.65;
+    max-width: 440px;
+    font-weight: 300;
+  }
+  .hero-intro em { color: var(--gold-dark); font-style: italic; }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+  .scroll-cue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .scroll-cue::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 0.5px;
+    background: var(--ink-mute);
+    animation: extend 2s infinite ease-in-out;
+  }
+  @keyframes extend {
+    0%, 100% { width: 12px; }
+    50% { width: 32px; }
+  }
+
+  /* HERO RIGHT — CHESS BOARD */
+  .hero-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 100%;
+    aspect-ratio: 1;
+    border: 1px solid var(--ink);
+    box-shadow: 12px 12px 0 var(--paper-3);
+    position: relative;
+  }
+  .chess-board::before {
+    content: 'POSITION · KASPAROV V. TOPALOV 1999';
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+  }
+  .sq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    line-height: 1;
+    position: relative;
+  }
+  .sq.l { background: var(--paper-2); }
+  .sq.d { background: var(--ink); color: var(--paper); }
+  .sq.l .p-w { color: var(--ink); }
+  .sq.l .p-b { color: var(--gold-dark); }
+  .sq.d .p-w { color: var(--paper); }
+  .sq.d .p-b { color: var(--gold-light); }
+  .sq .highlight {
+    position: absolute;
+    inset: 4px;
+    border: 1.5px solid var(--rust);
+    pointer-events: none;
+  }
+
+  .hero-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-mute);
+    line-height: 1.6;
+    padding-left: 1rem;
+    border-left: 1px solid var(--gold);
+    margin-top: 1.5rem;
+  }
+
+  /* SECTION GENERAL */
+  section {
+    padding: 8rem 3rem;
+    position: relative;
+  }
+
+  .section-divider {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--line);
+  }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+  }
+  .section-line { height: 0.5px; background: var(--line); }
+  .section-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  h2.section-h {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 2.5rem;
+    font-variation-settings: "opsz" 144;
+  }
+  h2.section-h em { font-style: italic; color: var(--gold-dark); }
+
+  .section-lede {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    max-width: 640px;
+    font-weight: 300;
+    margin-bottom: 4rem;
+  }
+
+  /* MANIFESTO SECTION */
+  .manifesto {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10rem 3rem;
+    position: relative;
+  }
+  .manifesto .grain { opacity: 0.6; }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .manifesto-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+  }
+  .manifesto-text {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 2.2vw, 2.4rem);
+    line-height: 1.35;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+  }
+  .manifesto-text .em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .manifesto-text .strike {
+    text-decoration: line-through;
+    color: var(--ink-faint);
+    text-decoration-thickness: 1px;
+  }
+  .manifesto-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 1rem;
+  }
+  .manifesto-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: baseline;
+    padding-bottom: 1.25rem;
+    border-bottom: 0.5px solid rgba(245,241,232,0.1);
+  }
+  .manifesto-item-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+  .manifesto-item-text {
+    font-size: 0.95rem;
+    color: var(--paper-2);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .manifesto-item-text strong {
+    color: var(--paper);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ABOUT — DOSSIER LAYOUT */
+  .dossier {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .dossier-card {
+    background: var(--paper-2);
+    border: 0.5px solid var(--line);
+    padding: 2rem;
+    position: relative;
+  }
+  .dossier-card::before {
+    content: 'CONFIDENTIAL · PERSONAL DOSSIER';
+    position: absolute;
+    top: -0.55rem;
+    left: 1.5rem;
+    background: var(--paper);
+    padding: 0 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+  }
+  .dossier-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .dossier-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 0.5px dashed var(--line);
+    align-items: baseline;
+  }
+  .dossier-row:last-child { border-bottom: none; }
+  .dossier-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .dossier-val {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .dossier-val em { color: var(--gold-dark); font-style: italic; }
+
+  .biography p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .biography p strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .biography .pull {
+    font-style: italic;
+    color: var(--gold-dark);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    padding: 1.5rem 0 1.5rem 2rem;
+    border-left: 2px solid var(--gold);
+    margin: 1.5rem 0;
+  }
+  .first-letter::first-letter {
+    font-family: 'Fraunces', serif;
+    font-size: 4.5rem;
+    font-style: italic;
+    font-weight: 300;
+    float: left;
+    line-height: 0.85;
+    padding: 0.3rem 0.6rem 0 0;
+    color: var(--gold-dark);
+  }
+
+  /* ACADEMICS */
+  .academics {
+    background: var(--paper-2);
+  }
+  .academic-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+  }
+
+  .courses {
+    display: flex;
+    flex-direction: column;
+  }
+  .course {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 0.5px solid var(--line);
+    transition: padding-left 0.3s ease;
+  }
+  .course:hover { padding-left: 1rem; }
+  .course-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-dark);
+    letter-spacing: 0.1em;
+  }
+  .course-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .course-name .level {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-dark);
+    margin-left: 0.75rem;
+    text-transform: uppercase;
+  }
+  .course-desc {
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    margin-top: 0.25rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .course-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    border: 0.5px solid var(--line);
+    padding: 0.35rem 0.7rem;
+    background: var(--paper);
+  }
+
+  .awards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .awards-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 1rem;
+  }
+  .award {
+    background: var(--paper);
+    border-left: 2px solid var(--gold);
+    padding: 1rem 1.25rem;
+  }
+  .award-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .award-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* CHESS SECTION */
+  .chess-section {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .chess-section h2.section-h em { color: var(--gold-light); }
+  .chess-section .section-line { background: rgba(245,241,232,0.15); }
+  .chess-section .section-name { color: var(--paper-2); }
+  .chess-section .section-lede { color: var(--paper-2); }
+
+  .chess-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .chess-narrative {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--paper-2);
+    font-weight: 300;
+  }
+  .chess-narrative p { margin-bottom: 1.5rem; }
+  .chess-narrative strong {
+    color: var(--gold-light);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .chess-principles {
+    display: flex;
+    flex-direction: column;
+  }
+  .principle {
+    padding: 1.75rem 0;
+    border-bottom: 0.5px solid rgba(245,241,232,0.12);
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+  .principle-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    font-weight: 300;
+  }
+  .principle-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .principle-text {
+    font-size: 0.9rem;
+    color: var(--paper-3);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* PHYSICAL — STATS */
+  .physical-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 0.5px solid var(--line);
+    border-left: 0.5px solid var(--line);
+  }
+  .stat-block {
+    border-right: 0.5px solid var(--line);
+    border-bottom: 0.5px solid var(--line);
+    padding: 2.5rem 2rem;
+    background: var(--paper);
+    position: relative;
+  }
+  .stat-block-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 1rem;
+  }
+  .stat-block-value {
+    font-family: 'Fraunces', serif;
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+    font-variation-settings: "opsz" 144;
+  }
+  .stat-block-value .unit {
+    font-size: 1.5rem;
+    color: var(--ink-mute);
+    font-style: italic;
+    margin-left: 0.25rem;
+  }
+  .stat-block-value .delta {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gold-dark);
+    font-style: italic;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .stat-block-desc {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .physical-narrative {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .physical-narrative h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+  .physical-narrative p {
+    font-size: 1rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  /* EXPERIENCE — TIMELINE */
+  .experience {
+    background: var(--paper-2);
+  }
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.65rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 0.5px;
+    background: var(--line);
+  }
+  .tl-entry {
+    position: relative;
+    padding-bottom: 3.5rem;
+  }
+  .tl-entry::before {
+    content: '';
+    position: absolute;
+    left: -2.85rem;
+    top: 0.5rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--paper-2);
+  }
+  .tl-entry::after {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 1rem;
+    width: 2rem;
+    height: 0.5px;
+    background: var(--line);
+  }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 0.5rem;
+  }
+  .tl-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .tl-org {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gold-dark);
+    margin-bottom: 1rem;
+  }
+  .tl-desc {
+    font-size: 1rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    max-width: 640px;
+    font-weight: 300;
+  }
+
+  /* INTELLECTUAL — LIBRARY */
+  .library-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--line);
+    border-left: 0.5px solid var(--line);
+    margin-bottom: 4rem;
+  }
+  .book {
+    padding: 2.25rem 2rem;
+    border-right: 0.5px solid var(--line);
+    border-bottom: 0.5px solid var(--line);
+    background: var(--paper);
+    transition: background 0.3s ease;
+    cursor: none;
+  }
+  .book:hover { background: var(--paper-2); }
+  .book-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .book-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .book-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+  }
+  .book-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .book-author {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-mute);
+    margin-bottom: 1rem;
+  }
+  .book-takeaway {
+    font-size: 0.85rem;
+    color: var(--ink-light);
+    line-height: 1.65;
+    padding-top: 1rem;
+    border-top: 0.5px dashed var(--line);
+    font-weight: 300;
+  }
+
+  .featured-essay {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+    border: 0.5px solid var(--ink);
+    position: relative;
+  }
+  .featured-essay::before {
+    content: 'FEATURED · OPUS';
+    position: absolute;
+    top: -0.55rem;
+    left: 2rem;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 0 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+  }
+  .essay-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+  }
+  .essay-title {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .essay-title em { font-style: italic; color: var(--gold-light); }
+  .essay-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--paper-2);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+  .essay-pages {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-light);
+    border: 0.5px solid var(--gold-light);
+    padding: 0.5rem 0.85rem;
+  }
+
+  /* AMBITION — UNIVERSITIES */
+  .universities {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--line);
+    border-left: 0.5px solid var(--line);
+  }
+  .uni {
+    padding: 2.5rem 2rem;
+    border-right: 0.5px solid var(--line);
+    border-bottom: 0.5px solid var(--line);
+    background: var(--paper);
+    position: relative;
+  }
+  .uni-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--gold-dark);
+    margin-bottom: 1.25rem;
+  }
+  .uni-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .uni-name em { font-style: italic; }
+  .uni-loc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 1rem;
+  }
+  .uni-why {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .career-roadmap {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .phase {
+    padding: 2rem;
+    position: relative;
+  }
+  .phase:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -0.6rem;
+    top: 2.25rem;
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    z-index: 2;
+  }
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 1rem;
+  }
+  .phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .phase-desc {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  /* WRITING — INDEX */
+  .writing {
+    background: var(--paper);
+  }
+  .writing-index {
+    display: flex;
+    flex-direction: column;
+    border-top: 0.5px solid var(--line);
+  }
+  .post {
+    display: grid;
+    grid-template-columns: 100px 1fr 200px 100px;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    align-items: baseline;
+    border-bottom: 0.5px solid var(--line);
+    transition: background 0.3s ease, padding-left 0.3s ease;
+  }
+  .post:hover {
+    background: var(--paper-2);
+    padding-left: 2rem;
+  }
+  .post-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+  }
+  .post-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .post-title em { font-style: italic; color: var(--gold-dark); }
+  .post-summary {
+    font-size: 0.88rem;
+    color: var(--ink-mute);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .post-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    text-align: left;
+  }
+  .post-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10rem 3rem;
+  }
+  .contact .section-name { color: var(--paper-2); }
+  .contact .section-line { background: rgba(245,241,232,0.15); }
+  .contact .section-number { color: var(--gold-light); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-h {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    font-variation-settings: "opsz" 144;
+  }
+  .contact-h em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .contact-text {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--paper-2);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .contact-rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-row {
+    padding: 1.5rem 0;
+    border-bottom: 0.5px solid rgba(245,241,232,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    text-decoration: none;
+    color: var(--paper);
+    transition: padding-left 0.3s ease;
+  }
+  .contact-row:hover {
+    padding-left: 1rem;
+  }
+  .contact-row-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .contact-row-val {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: var(--paper);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--paper-3);
+    padding: 2.5rem 3rem;
+    border-top: 0.5px solid rgba(245,241,232,0.12);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  footer .center { text-align: center; }
+  footer .right { text-align: right; }
+  footer em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    text-transform: none;
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    letter-spacing: 0;
+  }
+
+  /* SCROLL FADE-IN */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .dossier, .academic-grid, .chess-grid, .physical-narrative, .featured-essay, .contact-grid, .manifesto-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .physical-grid, .library-grid, .universities, .career-roadmap {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .post {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .phase:not(:last-child)::after { display: none; }
+  }
+  @media (max-width: 640px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 1rem 1.25rem; grid-template-columns: 1fr auto; }
+    .nav-meta { display: none; }
+    .nav-center { display: none; }
+    section, .manifesto, .contact { padding: 5rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .physical-grid, .library-grid, .universities, .career-roadmap {
+      grid-template-columns: 1fr;
+    }
+    h1.display { font-size: 4rem; }
+    h2.section-h { font-size: 2.75rem; }
+    .contact-h { font-size: 2.75rem; }
+    .timeline { padding-left: 2rem; }
+    .tl-entry::before { left: -1.85rem; }
+    .tl-entry::after { left: -1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<nav>
+  <div class="nav-mark">M.<span>H.</span></div>
+  <div class="nav-center">
+    <a href="#about">Origin</a>
+    <a href="#academics">Academics</a>
+    <a href="#chess">Chess</a>
+    <a href="#physical">Physical</a>
+    <a href="#experience">Experience</a>
+    <a href="#library">Library</a>
+    <a href="#ambition">Ambition</a>
+    <a href="#writing">Writing</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-meta"><span class="live-dot"></span>Dubai · 2026</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div>
+        <div class="hero-top-meta">
+          <div class="hero-top-meta-block">
+            <span class="label">Volume</span>
+            <span class="val">№ 01 — Personal Archive</span>
+          </div>
+          <div class="hero-top-meta-block">
+            <span class="label">Edition</span>
+            <span class="val">2026 · Dubai, UAE</span>
+          </div>
+          <div class="hero-top-meta-block">
+            <span class="label">Subject</span>
+            <span class="val">M. Hammouda · Age 18</span>
+          </div>
+        </div>
+        <h1 class="display">
+          Mahmod<br>
+          <span class="italic">Hammouda</span>
+          <span class="small">A working archive of one student's thinking — chess, engineering, finance, faith. The record of someone trying to build something that matters before the world tells him what's possible.</span>
+        </h1>
+      </div>
+
+      <div class="hero-bottom">
+        <p class="hero-intro">
+          Trilingual IB student. Competitive chess player. Future engineer or financier. <em>Long-term, I'm not building a career — I'm building the foundation for ownership, for influence, for work that outlasts me.</em>
+        </p>
+        <div class="hero-cta">
+          <div class="scroll-cue">Scroll · Begin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="chess-board" id="chessBoard"></div>
+      <div class="hero-quote">
+        "Chess is not a hobby for me — it is a reflection of how I think. Patiently. Several moves ahead. Always playing for position."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-grid">
+    <div>
+      <div class="manifesto-label">§ Manifesto · The four pillars</div>
+      <p class="manifesto-text">
+        I am not interested in <span class="strike">credentials</span>. I am interested in <span class="em">capacity</span> — the kind built through deliberate effort across every dimension that matters.<br><br>
+        Strategic. Deliberate. <span class="em">Influential.</span> Visionary. Not adjectives — outputs.
+      </p>
+    </div>
+    <div class="manifesto-list">
+      <div class="manifesto-item">
+        <span class="manifesto-item-num">01 ·</span>
+        <p class="manifesto-item-text"><strong>Mind.</strong> Read voraciously. Stress-test what I learn. Write to clarify thinking, not to perform it.</p>
+      </div>
+      <div class="manifesto-item">
+        <span class="manifesto-item-num">02 ·</span>
+        <p class="manifesto-item-text"><strong>Body.</strong> Build the physical foundation that makes mental work sustainable for decades.</p>
+      </div>
+      <div class="manifesto-item">
+        <span class="manifesto-item-num">03 ·</span>
+        <p class="manifesto-item-text"><strong>Spirit.</strong> Stay anchored in faith — purpose without it is performance.</p>
+      </div>
+      <div class="manifesto-item">
+        <span class="manifesto-item-num">04 ·</span>
+        <p class="manifesto-item-text"><strong>Craft.</strong> Master one industry from the inside before trying to change it from above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN / ABOUT -->
+<section id="about">
+  <div class="section-divider">
+    <span class="section-number">01 · ORIGIN</span>
+    <div class="section-line"></div>
+    <span class="section-name">Personal Dossier</span>
+  </div>
+  <h2 class="section-h">Who I <em>am</em>.</h2>
+  <p class="section-lede">
+    Three countries. Three languages. One identity, deliberately constructed. Born in Mississauga, formed in Dubai, defined by the discipline to hold both worlds at once.
+  </p>
+
+  <div class="dossier">
+    <div class="dossier-card">
+      <div class="dossier-card-inner">
+        <div class="dossier-row"><span class="dossier-label">Name</span><span class="dossier-val">Mahmod Hammouda</span></div>
+        <div class="dossier-row"><span class="dossier-label">Age</span><span class="dossier-val">18</span></div>
+        <div class="dossier-row"><span class="dossier-label">Origin</span><span class="dossier-val">Mississauga, Ontario</span></div>
+        <div class="dossier-row"><span class="dossier-label">Based</span><span class="dossier-val">Dubai, UAE</span></div>
+        <div class="dossier-row"><span class="dossier-label">Languages</span><span class="dossier-val">English · <em>Arabic</em> · Français</span></div>
+        <div class="dossier-row"><span class="dossier-label">Faith</span><span class="dossier-val">Muslim</span></div>
+        <div class="dossier-row"><span class="dossier-label">Program</span><span class="dossier-val">IB Diploma — Grade 12</span></div>
+        <div class="dossier-row"><span class="dossier-label">Aspires</span><span class="dossier-val"><em>Engineering or Finance</em></span></div>
+        <div class="dossier-row"><span class="dossier-label">Dream</span><span class="dossier-val">SpaceX</span></div>
+        <div class="dossier-row"><span class="dossier-label">Endgame</span><span class="dossier-val">Ownership</span></div>
+      </div>
+    </div>
+
+    <div class="biography">
+      <p class="first-letter">
+        I grew up in <strong>Mississauga</strong>, shaped by Arabic heritage, educated in English, driven enough to develop French as a third language. Not because I had to — because being globally capable is a competitive advantage.
+      </p>
+      <p>
+        At 16, my family relocated to <strong>Dubai</strong>. No friends. No social safety net. No expectations to hide behind. The move was the most formative thing that has happened to me — a forced confrontation with who I actually was beneath comfort and familiarity.
+      </p>
+      <div class="pull">
+        Stripped of labels, I rebuilt deliberately. That process is what gave me clarity about my values, my goals, and what I am actually capable of.
+      </div>
+      <p>
+        What I am today is not a coincidence. I read across <strong>philosophy, finance, strategy, history</strong> — not because I was assigned to, but because I cannot stop. I play chess seriously. I train physically with the same intensity I bring to ideas. I think in <strong>systems and phases</strong>, not impulses.
+      </p>
+      <p>
+        The awards confirm what the rest of this shows. I am someone who <strong>follows through</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMICS -->
+<section id="academics" class="academics">
+  <div class="section-divider">
+    <span class="section-number">02 · ACADEMICS</span>
+    <div class="section-line"></div>
+    <span class="section-name">The IB Curriculum</span>
+  </div>
+  <h2 class="section-h">The <em>rigorous</em> path.</h2>
+  <p class="section-lede">
+    Higher Level Mathematics, Higher Level Physics, Higher Level Business Management. Three of the most demanding subjects in pre-university education — chosen deliberately for their intersection of technical precision and strategic thinking.
+  </p>
+
+  <div class="academic-grid">
+    <div class="courses">
+      <div class="course">
+        <span class="course-num">/ 01</span>
+        <div>
+          <div class="course-name">Mathematics — Analysis & Approaches <span class="level">HL</span></div>
+          <div class="course-desc">The most rigorous mathematical curriculum available at the pre-university level.</div>
+        </div>
+        <span class="course-tag">Higher Level</span>
+      </div>
+      <div class="course">
+        <span class="course-num">/ 02</span>
+        <div>
+          <div class="course-name">Physics <span class="level">HL</span></div>
+          <div class="course-desc">Foundation for engineering thinking — modeling, prediction, the language of systems.</div>
+        </div>
+        <span class="course-tag">Higher Level</span>
+      </div>
+      <div class="course">
+        <span class="course-num">/ 03</span>
+        <div>
+          <div class="course-name">Business Management <span class="level">HL</span></div>
+          <div class="course-desc">Strategic reasoning, finance fundamentals, how organizations actually function.</div>
+        </div>
+        <span class="course-tag">Higher Level</span>
+      </div>
+      <div class="course">
+        <span class="course-num">/ 04</span>
+        <div>
+          <div class="course-name">English Literature <span class="level">SL</span></div>
+          <div class="course-desc">The discipline of close reading and writing under constraint.</div>
+        </div>
+        <span class="course-tag">Standard</span>
+      </div>
+      <div class="course">
+        <span class="course-num">/ 05</span>
+        <div>
+          <div class="course-name">Arabic Language <span class="level">SL</span></div>
+          <div class="course-desc">Heritage made literate — keeping the mother tongue formal, not just spoken.</div>
+        </div>
+        <span class="course-tag">Standard</span>
+      </div>
+      <div class="course">
+        <span class="course-num">/ 06</span>
+        <div>
+          <div class="course-name">Environmental Systems <span class="level">SL</span></div>
+          <div class="course-desc">Systems thinking applied to ecology — interconnection at scale.</div>
+        </div>
+        <span class="course-tag">Standard</span>
+      </div>
+    </div>
+
+    <div class="awards">
+      <div class="awards-title">— Recognition</div>
+      <div class="award">
+        <div class="award-name">Honor Roll</div>
+        <div class="award-meta">Academic Excellence · 2025</div>
+      </div>
+      <div class="award">
+        <div class="award-name">Academic Scholarship</div>
+        <div class="award-meta">Awarded for Performance</div>
+      </div>
+      <div class="award">
+        <div class="award-name">Excellence in Mathematics</div>
+        <div class="award-meta">Subject Award</div>
+      </div>
+      <div class="award">
+        <div class="award-name">Excellence in Islamic Studies</div>
+        <div class="award-meta">Subject Award</div>
+      </div>
+      <div class="award">
+        <div class="award-name">Debate Club</div>
+        <div class="award-meta">Member — Three Consecutive Years</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHESS -->
+<section id="chess" class="chess-section">
+  <div class="section-divider">
+    <span class="section-number">03 · CHESS</span>
+    <div class="section-line"></div>
+    <span class="section-name">The Game Beneath The Game</span>
+  </div>
+  <h2 class="section-h">A <em>life</em> in 64 squares.</h2>
+  <p class="section-lede">
+    Most people play chess. I study it. Openings, middlegame structure, endgame technique — through Gotham Chess, Chess.com courses, and thousands of analyzed positions. The board is the closest thing I have to a mirror.
+  </p>
+
+  <div class="chess-grid">
+    <div class="chess-narrative">
+      <p>
+        I have played chess <strong>competitively for over a decade</strong>. Tournament wins. Top finishes. The kind of discipline that comes only from sitting at a board for hours, calculating, failing, recalibrating, and trying again.
+      </p>
+      <p>
+        But chess as a competition is downstream of chess as a way of thinking. What I have actually internalized through the game is a <strong>philosophy of patience</strong> — the willingness to forgo immediate gratification for positional advantage. The discipline to let pieces develop before launching attacks. The humility to study the masters before assuming you have anything new to offer.
+      </p>
+      <p>
+        Every business decision I'll make, every relationship I navigate, every strategic move in life — they all rhyme with positions I have seen on the board. Chess does not teach you to win. It teaches you to <strong>see the whole board</strong>, weigh trade-offs honestly, and accept that the best move is rarely the most exciting one.
+      </p>
+      <p>
+        It is the single most useful intellectual discipline I have ever practiced — and I'll practice it for the rest of my life.
+      </p>
+    </div>
+
+    <div class="chess-principles">
+      <div class="principle">
+        <span class="principle-num">i.</span>
+        <div>
+          <div class="principle-title">Play for position, not points.</div>
+          <p class="principle-text">The strongest moves often look quiet. Real advantage compounds invisibly until it becomes irreversible.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">ii.</span>
+        <div>
+          <div class="principle-title">Develop before you attack.</div>
+          <p class="principle-text">Premature aggression loses to patient preparation. Build your foundation first; the opportunities will reveal themselves.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">iii.</span>
+        <div>
+          <div class="principle-title">Every move costs something.</div>
+          <p class="principle-text">There are no free moves. Every choice creates new constraints — the discipline is in choosing well.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">iv.</span>
+        <div>
+          <div class="principle-title">Endgame thinking from move one.</div>
+          <p class="principle-text">The opening matters because it shapes the middlegame, which shapes the endgame. Always be playing the position you're building toward.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHYSICAL -->
+<section id="physical">
+  <div class="section-divider">
+    <span class="section-number">04 · PHYSICAL</span>
+    <div class="section-line"></div>
+    <span class="section-name">The Discipline of the Body</span>
+  </div>
+  <h2 class="section-h">Built, not <em>born</em>.</h2>
+  <p class="section-lede">
+    Twelve months ago I weighed 60 kilograms. Today I am 70. The bench press went from 145 pounds to 200. These are not casual numbers. They are evidence that I refuse to plateau — and that I treat the body with the same systematic seriousness I bring to the mind.
+  </p>
+
+  <div class="physical-grid">
+    <div class="stat-block">
+      <div class="stat-block-meta">— Body Mass</div>
+      <div class="stat-block-value">70<span class="unit">kg</span><span class="delta">+10 kg / 12 months</span></div>
+      <p class="stat-block-desc">Lean mass added through structured training and disciplined nutrition.</p>
+    </div>
+    <div class="stat-block">
+      <div class="stat-block-meta">— Bench Press</div>
+      <div class="stat-block-value">200<span class="unit">lb</span><span class="delta">+55 lb · 38% gain</span></div>
+      <p class="stat-block-desc">Progressive overload across a year of programmed training cycles.</p>
+    </div>
+    <div class="stat-block">
+      <div class="stat-block-meta">— Discipline Streak</div>
+      <div class="stat-block-value">12<span class="unit">mo</span><span class="delta">No extended breaks</span></div>
+      <p class="stat-block-desc">Twelve months of consistent training, programmed and tracked.</p>
+    </div>
+  </div>
+
+  <div class="physical-narrative">
+    <div>
+      <h3>Football — the lifelong sport.</h3>
+      <p>
+        Football has been a constant since I was a child. I have played at every level available to me and have been outstanding at each one. It is where I learned how teams function under pressure, how leadership is earned through performance, and how to compete without losing composure.
+      </p>
+      <p>
+        The lessons from team sport — communication, accountability, performance under fatigue — carry into every other area of my life.
+      </p>
+    </div>
+    <div>
+      <h3>The gym — proof of system.</h3>
+      <p>
+        Anyone can train for a week. Almost no one trains consistently for a year. The gym is the most honest mirror I have — it tells you exactly how disciplined you have been, with no possibility of self-deception.
+      </p>
+      <p>
+        I bring that same standard to everything else. If I cannot trust myself with the body, I cannot trust myself with anything more abstract.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="experience">
+  <div class="section-divider">
+    <span class="section-number">05 · EXPERIENCE</span>
+    <div class="section-line"></div>
+    <span class="section-name">Formative Encounters</span>
+  </div>
+  <h2 class="section-h">The <em>real</em> classroom.</h2>
+  <p class="section-lede">
+    Two experiences outside the academic frame have shaped me more than any course. One taught me discipline; the other taught me how a business actually functions beneath the surface.
+  </p>
+
+  <div class="timeline">
+    <div class="tl-entry">
+      <div class="tl-date">2019 — 2020 · Mississauga, ON</div>
+      <div class="tl-title">Canadian Army Cadet</div>
+      <div class="tl-org">Royal Canadian Army Cadet Corps</div>
+      <div class="tl-desc">
+        Immersed in an environment built on discipline, structure, and leadership. The program demanded punctuality, physical fitness, teamwork, and the ability to both follow and give direction. I learned how high-performing teams operate under pressure — and that leadership is earned through consistency and reliability, never granted by title.
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-date">2024 · Dubai, UAE</div>
+      <div class="tl-title">Operations Management — Shadow</div>
+      <div class="tl-org">Restaurant Industry · Thai Concept</div>
+      <div class="tl-desc">
+        Shadowed an Operations Manager and observed firsthand how a business functions at ground level. Exposure to staff coordination, inventory and supply chain management, customer experience, and daily decision-making. What struck me most was how many moving parts had to align simultaneously — and how the best operators made it look seamless through anticipation rather than reaction.
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-date">Ongoing</div>
+      <div class="tl-title">Self-Directed Builder</div>
+      <div class="tl-org">Personal — Independent Study & Projects</div>
+      <div class="tl-desc">
+        Outside of formal credentials, I have built a habit of deep self-directed work. Reading widely across finance and strategy. Writing structured analyses (including a 22-page personal breakdown of <em>The 48 Laws of Power</em>). Maintaining structured fitness programming. Studying chess at a higher level than required. This is the work no one assigns — which is exactly why it matters most.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library">
+  <div class="section-divider">
+    <span class="section-number">06 · LIBRARY</span>
+    <div class="section-line"></div>
+    <span class="section-name">The Books That Built Me</span>
+  </div>
+  <h2 class="section-h">What I'm <em>reading</em>.</h2>
+  <p class="section-lede">
+    I read to stress-test ideas, not to collect them. These are the books I have wrestled with and the ones that have actually changed how I see the world.
+  </p>
+
+  <div class="library-grid">
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Finance</span>
+        <span class="book-num">№ 01</span>
+      </div>
+      <div class="book-title">Rich Dad, Poor Dad</div>
+      <div class="book-author">— Robert Kiyosaki</div>
+      <p class="book-takeaway">Formative. Reframed how I think about wealth — the distinction between working for money and making money work for you became foundational.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Strategy</span>
+        <span class="book-num">№ 02</span>
+      </div>
+      <div class="book-title">The 48 Laws of Power</div>
+      <div class="book-author">— Robert Greene</div>
+      <p class="book-takeaway">I wrote a 22-page analytical breakdown of the first sixteen laws. Not because anyone asked. Because I needed to stress-test each principle against my own logic.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— History</span>
+        <span class="book-num">№ 03</span>
+      </div>
+      <div class="book-title">Sapiens</div>
+      <div class="book-author">— Yuval Noah Harari</div>
+      <p class="book-takeaway">A reminder that shared fiction — money, nations, rights — is what built civilization. Every founder is in the business of writing new stories.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Habits</span>
+        <span class="book-num">№ 04</span>
+      </div>
+      <div class="book-title">Atomic Habits</div>
+      <div class="book-author">— James Clear</div>
+      <p class="book-takeaway">The clearest case I have read for systems over goals. My fitness, study, and prayer routines all owe something to this book.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Strategy</span>
+        <span class="book-num">№ 05</span>
+      </div>
+      <div class="book-title">The Art of War</div>
+      <div class="book-author">— Sun Tzu</div>
+      <p class="book-takeaway">Strategy distilled to its essence. The lessons translate seamlessly from war to chess to business — which is precisely the point.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Faith</span>
+        <span class="book-num">№ 06</span>
+      </div>
+      <div class="book-title">The Clear Quran</div>
+      <div class="book-author">— Translation by Dr. Mustafa Khattab</div>
+      <p class="book-takeaway">The anchor beneath everything else. Provides the framework against which I measure ambition, discipline, and what success actually means.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Purpose</span>
+        <span class="book-num">№ 07</span>
+      </div>
+      <div class="book-title">Ikigai</div>
+      <div class="book-author">— Héctor García & Francesc Miralles</div>
+      <p class="book-takeaway">Reframes "career" as the intersection of love, skill, mission, and value. A useful corrective to thinking of work as transactional.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Science</span>
+        <span class="book-num">№ 08</span>
+      </div>
+      <div class="book-title">Veritasium · Long-Form</div>
+      <div class="book-author">— Derek Muller</div>
+      <p class="book-takeaway">Not a book — a consistent intellectual companion. The clearest demonstration that complex ideas can be made beautiful without being dumbed down.</p>
+    </div>
+    <div class="book">
+      <div class="book-meta">
+        <span class="book-cat">— Strategy</span>
+        <span class="book-num">№ 09</span>
+      </div>
+      <div class="book-title">Chess Mastery Series</div>
+      <div class="book-author">— GothamChess & Chess.com</div>
+      <p class="book-takeaway">Structured study of openings, middlegame, and endgame technique. The closest thing I have to formal training in the discipline I love most.</p>
+    </div>
+  </div>
+
+  <div class="featured-essay">
+    <div>
+      <div class="essay-meta">— Personal Manuscript · 2024</div>
+      <h3 class="essay-title">The <em>48 Laws</em> — a strategic reread.</h3>
+    </div>
+    <div>
+      <p class="essay-desc">
+        A 22-page personal breakdown of the first sixteen laws from Robert Greene's <em>48 Laws of Power</em> — written for no audience, no grade, no assignment. Each principle examined for its underlying logic, stress-tested against real-world examples, and re-articulated in my own words.
+      </p>
+      <span class="essay-pages">22 PAGES · UNPUBLISHED</span>
+    </div>
+  </div>
+</section>
+
+<!-- AMBITION / UNIVERSITY -->
+<section id="ambition">
+  <div class="section-divider">
+    <span class="section-number">07 · AMBITION</span>
+    <div class="section-line"></div>
+    <span class="section-name">Where I'm Going</span>
+  </div>
+  <h2 class="section-h">The next <em>five</em> moves.</h2>
+  <p class="section-lede">
+    University is one deliberate step in a much longer plan. Four Canadian institutions, each chosen for a specific reason. Beyond the degree lies the actual work — entry, mastery, transition, ownership.
+  </p>
+
+  <div class="universities">
+    <div class="uni">
+      <div class="uni-rank">— Choice № 01</div>
+      <div class="uni-name">University of <em>Toronto</em></div>
+      <div class="uni-loc">Toronto · Ontario</div>
+      <p class="uni-why">World-class engineering programs alongside the Rotman School of Management — the bridge between technical and business thinking.</p>
+    </div>
+    <div class="uni">
+      <div class="uni-rank">— Choice № 02</div>
+      <div class="uni-name">University of <em>Waterloo</em></div>
+      <div class="uni-loc">Waterloo · Ontario</div>
+      <p class="uni-why">The co-op program offers invaluable industry experience while studying — practical exposure at scale.</p>
+    </div>
+    <div class="uni">
+      <div class="uni-rank">— Choice № 03</div>
+      <div class="uni-name"><em>McGill</em> University</div>
+      <div class="uni-loc">Montréal · Québec</div>
+      <p class="uni-why">Academic excellence in a city that lets me deepen French into genuine bilingual fluency.</p>
+    </div>
+    <div class="uni">
+      <div class="uni-rank">— Choice № 04</div>
+      <div class="uni-name">University of <em>British Columbia</em></div>
+      <div class="uni-loc">Vancouver · BC</div>
+      <p class="uni-why">Outstanding academics in an environment that fosters both focus and perspective.</p>
+    </div>
+  </div>
+
+  <div class="career-roadmap">
+    <div class="phase">
+      <div class="phase-num">— Phase 01</div>
+      <div class="phase-title">Foundation</div>
+      <p class="phase-desc">Enter a reputable corporation in engineering or finance. Master the craft. Understand the industry from inside the system. Build technical and financial literacy at depth.</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">— Phase 02</div>
+      <div class="phase-title">Capital & Network</div>
+      <p class="phase-desc">Accumulate assets through disciplined saving and investment. Develop the relationships that will matter later. Identify gaps and unmet needs from the inside.</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">— Phase 03</div>
+      <div class="phase-title">Ownership</div>
+      <p class="phase-desc">Build the company. Infrastructure. Technology. Finance. Real estate. Whatever the gap demands — but on my own terms, with my own thesis, with my own team.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="writing" class="writing">
+  <div class="section-divider">
+    <span class="section-number">08 · WRITING</span>
+    <div class="section-line"></div>
+    <span class="section-name">Public Thinking</span>
+  </div>
+  <h2 class="section-h">Out <em>loud</em>.</h2>
+  <p class="section-lede">
+    Essays, breakdowns, and frameworks — published as I think them through. Not polished content. Actual thinking, in public.
+  </p>
+
+  <div class="writing-index">
+    <div class="post">
+      <span class="post-num">№ 01</span>
+      <div>
+        <div class="post-title">The <em>48 Laws</em> — a strategic reread for the modern builder</div>
+      </div>
+      <div class="post-summary">Sixteen laws, stress-tested. Where Greene was right, where he was lazy, and what survives translation to the present.</div>
+      <span class="post-status">— In progress</span>
+    </div>
+    <div class="post">
+      <span class="post-num">№ 02</span>
+      <div>
+        <div class="post-title">What <em>chess</em> taught me about decisions under pressure</div>
+      </div>
+      <div class="post-summary">The mental habits formed at the board — and where they hold up off it.</div>
+      <span class="post-status">— Drafting</span>
+    </div>
+    <div class="post">
+      <span class="post-num">№ 03</span>
+      <div>
+        <div class="post-title">Why <em>engineering</em> before <em>finance</em> — and how they connect</div>
+      </div>
+      <div class="post-summary">The case for building technical understanding before financial sophistication, and the long compounding it creates.</div>
+      <span class="post-status">— Planned</span>
+    </div>
+    <div class="post">
+      <span class="post-num">№ 04</span>
+      <div>
+        <div class="post-title">Mississauga to <em>Dubai</em>: what losing everything taught me about identity</div>
+      </div>
+      <div class="post-summary">A personal essay on relocation, rebuilding, and the strange freedom of being unknown.</div>
+      <span class="post-status">— Planned</span>
+    </div>
+    <div class="post">
+      <span class="post-num">№ 05</span>
+      <div>
+        <div class="post-title"><em>SpaceX</em> as a framework — thinking about ambition at scale</div>
+      </div>
+      <div class="post-summary">What it actually means to build something that resets the boundaries of what is considered possible.</div>
+      <span class="post-status">— Planned</span>
+    </div>
+    <div class="post">
+      <span class="post-num">№ 06</span>
+      <div>
+        <div class="post-title">The case for <em>faith</em> — purpose as infrastructure</div>
+      </div>
+      <div class="post-summary">Why religious grounding is competitive advantage, not constraint, for someone trying to build for the long term.</div>
+      <span class="post-status">— Planned</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="section-divider">
+    <span class="section-number">09 · CONTACT</span>
+    <div class="section-line"></div>
+    <span class="section-name">Begin a Conversation</span>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <h2 class="contact-h">Find <em>me</em>.</h2>
+      <p class="contact-text">
+        I'm open to conversations with people who think seriously — about engineering, finance, chess, faith, ambition, or anything that intersects them. Mentors, founders, students, peers — if our paths align, reach out.
+      </p>
+    </div>
+    <div class="contact-rows">
+      <a href="mailto:mahmod.h1@gemsisak.com" class="contact-row">
+        <span class="contact-row-label">— Email</span>
+        <span class="contact-row-val">mahmod.h1@gemsisak.com</span>
+      </a>
+      <a href="#" class="contact-row">
+        <span class="contact-row-label">— LinkedIn</span>
+        <span class="contact-row-val">linkedin.com/in/mahmod-hammouda</span>
+      </a>
+      <a href="#" class="contact-row">
+        <span class="contact-row-label">— Chess.com</span>
+        <span class="contact-row-val">@mahmod</span>
+      </a>
+      <div class="contact-row">
+        <span class="contact-row-label">— Based</span>
+        <span class="contact-row-val">Dubai, UAE</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-row-label">— Next</span>
+        <span class="contact-row-val">Canada · 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 · M. Hammouda · Archive</span>
+  <span class="center"><em>Strategic. Deliberate. Influential. Visionary.</em></span>
+  <span class="right">Vol. 01 · Dubai Edition</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.querySelector('.cursor');
+  const ring = document.querySelector('.cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  if (window.innerWidth > 640) {
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function loop() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    document.querySelectorAll('a, .book, .course, .post, .stat-block, .uni, .phase').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  }
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('section, .section-divider, h2.section-h, .section-lede, .dossier, .academic-grid, .chess-grid, .physical-grid, .physical-narrative, .timeline, .library-grid, .featured-essay, .universities, .career-roadmap, .writing-index, .contact-grid');
+  reveals.forEach(el => el.classList.add('reveal'));
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  reveals.forEach(el => obs.observe(el));
+
+  // Chess board — a real game position (Kasparov v Topalov 1999, after move 24)
+  const board = document.getElementById('chessBoard');
+  const position = [
+    ['','','','','','','k',''],   // 8
+    ['','','','p','','','p','p'], // 7
+    ['','','p','','p','','','P'], // 6
+    ['','','P','','','p','','q'], // 5
+    ['','','P','','P','P','','R'], // 4
+    ['','','','','','','','B'],   // 3
+    ['','','','','','','','P'],   // 2
+    ['','','','','','','','K']    // 1
+  ];
+  const symbols = { 'K':'♔','Q':'♕','R':'♖','B':'♗','N':'♘','P':'♙',
+                    'k':'♚','q':'♛','r':'♜','b':'♝','n':'♞','p':'♟' };
+  const highlightSquares = [[4,7],[3,7]]; // Knight tour
+
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const sq = document.createElement('div');
+      const isLight = (row + col) % 2 === 0;
+      sq.className = 'sq ' + (isLight ? 'l' : 'd');
+      const piece = position[row][col];
+      if (piece) {
+        const isWhite = piece === piece.toUpperCase();
+        sq.innerHTML = `<span class="${isWhite ? 'p-w' : 'p-b'}">${symbols[piece]}</span>`;
+      }
+      if (highlightSquares.some(h => h[0] === row && h[1] === col)) {
+        sq.innerHTML += '<span class="highlight"></span>';
+      }
+      board.appendChild(sq);
+    }
+  }
+</script>
+
+</body>
+</html>
