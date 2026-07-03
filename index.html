@@ -3,1981 +3,1792 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mahmod Hammouda — Archive</title>
-<meta name="description" content="Mahmod Hammouda — Strategist, chess player, IB student. Building toward something that matters.">
+<title>Mahmod Hammouda — Several Moves Ahead</title>
+<meta name="description" content="Mahmod Hammouda — strategist, chess player, IB student in Dubai. A scroll-driven portrait of someone building toward ownership, several moves ahead.">
+<meta name="theme-color" content="#0a0908">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* ============================================================
+   MAHMOD HAMMOUDA — "SEVERAL MOVES AHEAD"
+   A scroll-driven cinematic portrait.
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
-    --ink: #0A0A08;
-    --paper: #F5F1E8;
-    --paper-2: #EDE7D8;
-    --paper-3: #E2DBC8;
-    --gold: #B8924D;
-    --gold-dark: #8B6E2E;
-    --gold-light: #D4B872;
-    --rust: #8B3A1F;
-    --olive: #5A5938;
-    --shadow: rgba(10,10,8,0.08);
-    --ink-light: #2A2A24;
-    --ink-mute: #6B6A5E;
-    --ink-faint: #9C9A8B;
-    --line: rgba(10,10,8,0.12);
-    --line-soft: rgba(10,10,8,0.06);
-  }
+:root {
+  --void:        #0a0908;
+  --coal:        #121009;
+  --coal-2:      #1a1710;
+  --panel:       #171410;
+  --board-night: #0d120c;
+  --ember-night: #16100a;
+  --star-night:  #0a0d14;
 
-  html { scroll-behavior: smooth; }
+  --cream:       #f0e7d3;
+  --body:        #c9bfa9;
+  --dim:         #968d77;
+  --faint:       #675f4e;
 
-  body {
-    font-family: 'Fraunces', serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-    overflow-x: hidden;
-    cursor: none;
-    line-height: 1.5;
-  }
+  --gold:        #d4a94e;
+  --gold-hot:    #f0c96c;
+  --gold-deep:   #9a7832;
+  --rust:        #e05c2e;
 
-  /* GRAIN OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
+  --line:        rgba(232,215,180,0.10);
+  --line-2:      rgba(232,215,180,0.22);
+
+  --serif: 'Fraunces', Georgia, serif;
+  --mono:  'JetBrains Mono', monospace;
+
+  --pad: clamp(1.25rem, 4vw, 4rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  font-family: var(--serif);
+  background: var(--void);
+  color: var(--cream);
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+::selection { background: var(--gold); color: var(--void); }
+
+/* film grain */
+body::after {
+  content: '';
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none;
+  z-index: 2000;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 9s steps(10) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); } 10% { transform: translate(-4%,-6%); }
+  20% { transform: translate(-8%,3%); } 30% { transform: translate(5%,-10%); }
+  40% { transform: translate(-3%,12%); } 50% { transform: translate(-10%,4%); }
+  60% { transform: translate(8%,0); } 70% { transform: translate(0,8%); }
+  80% { transform: translate(2%,14%); } 90% { transform: translate(-7%,5%); }
+}
+
+/* ============ LOADER ============ */
+#loader {
+  position: fixed; inset: 0; z-index: 5000;
+  background: var(--void);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.25rem;
+  transition: transform 0.9s var(--ease);
+}
+#loader.done { transform: translateY(-100%); }
+#loader .knight {
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  color: var(--gold);
+  animation: knightPulse 1.2s ease-in-out infinite;
+  line-height: 1;
+}
+@keyframes knightPulse { 0%,100% { opacity: 1; transform: translateY(0); } 50% { opacity: 0.55; transform: translateY(-6px); } }
+#loader .l-name {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.45em; text-transform: uppercase; color: var(--dim);
+}
+#loader .l-count {
+  font-family: var(--serif); font-style: italic; font-weight: 200;
+  font-size: 1.4rem; color: var(--cream);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ CURSOR ============ */
+#cur, #curRing { display: none; }
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, input, label, .slot, [data-cursor] { cursor: none; }
+  #cur {
+    display: block; position: fixed; z-index: 4000;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold-hot);
+    transform: translate(-50%,-50%);
     pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode: multiply;
+    top: -20px; left: -20px;
   }
-
-  /* CUSTOM CURSOR */
-  .cursor {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--ink);
-    border-radius: 50%;
+  #curRing {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; z-index: 3999;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(212,169,78,0.55);
+    transform: translate(-50%,-50%);
     pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background 0.2s;
-    mix-blend-mode: difference;
+    transition: width 0.35s var(--ease), height 0.35s var(--ease),
+                background 0.35s, border-color 0.35s;
+    top: -40px; left: -40px;
   }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.3s ease, width 0.3s, height 0.3s, opacity 0.3s;
-    mix-blend-mode: difference;
+  #curRing .lbl {
+    font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.22em;
+    color: var(--void); opacity: 0;
+    transition: opacity 0.25s;
+    text-transform: uppercase; font-weight: 500;
   }
-  .cursor-ring.hover { width: 56px; height: 56px; opacity: 0.4; }
+  #curRing.on { width: 72px; height: 72px; background: var(--gold-hot); border-color: var(--gold-hot); }
+  #curRing.on .lbl { opacity: 1; }
+  #curRing.tap { width: 54px; height: 54px; border-color: var(--gold-hot); }
+}
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 1.75rem 3rem;
-    background: rgba(245,241,232,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 0.5px solid var(--line);
-  }
-  .nav-mark {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.4rem;
-    letter-spacing: -0.01em;
-  }
-  .nav-mark span { color: var(--gold-dark); }
-  .nav-center {
-    display: flex;
-    gap: 2.5rem;
-    justify-content: center;
-  }
-  .nav-center a {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    text-decoration: none;
-    transition: color 0.2s;
-    font-weight: 400;
-  }
-  .nav-center a:hover { color: var(--ink); }
-  .nav-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--ink-faint);
-    text-align: right;
-    text-transform: uppercase;
-  }
-  .live-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--rust);
-    margin-right: 6px;
-    animation: pulse 2s infinite;
-    vertical-align: middle;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+/* ============ PROGRESS + NAV ============ */
+#bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 3500;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-hot));
+  transform-origin: 0 50%; transform: scaleX(0);
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 3000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem var(--pad);
+  transition: background 0.5s, backdrop-filter 0.5s, padding 0.5s;
+}
+nav.scrolled {
+  padding: 0.9rem var(--pad);
+  background: rgba(10,9,8,0.72);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-mark {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: 1.35rem; color: var(--cream); text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.nav-mark b { color: var(--gold); font-weight: 400; }
+.nav-right { display: flex; align-items: center; gap: 2rem; }
+.nav-meta {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim);
+}
+.live { display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--rust); margin-right: 7px; vertical-align: middle;
+  animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+#menuBtn {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--cream);
+  background: none; border: 1px solid var(--line-2);
+  padding: 0.7rem 1.3rem; border-radius: 99px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+#menuBtn:hover { background: var(--cream); color: var(--void); border-color: var(--cream); }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    padding: 9rem 3rem 4rem;
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    overflow: hidden;
-  }
+/* fullscreen menu */
+#menu {
+  position: fixed; inset: 0; z-index: 3200;
+  background: var(--void);
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  padding: clamp(5rem, 12vh, 8rem) var(--pad) 3rem;
+  gap: 3rem;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s var(--ease);
+  visibility: hidden;
+}
+#menu.open { clip-path: inset(0 0 0% 0); visibility: visible; }
+.menu-links { display: flex; flex-direction: column; justify-content: center; }
+.menu-links a {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  text-decoration: none; color: var(--cream);
+  padding: 0.35rem 0;
+  overflow: hidden;
+}
+.menu-links a .n {
+  font-family: var(--mono); font-size: 0.62rem; color: var(--gold);
+  letter-spacing: 0.1em; width: 4.5rem; flex: none;
+}
+.menu-links a .t {
+  font-family: var(--serif); font-weight: 250;
+  font-size: clamp(1.9rem, 4.6vh, 3.1rem); line-height: 1.12;
+  letter-spacing: -0.02em;
+  transition: transform 0.5s var(--ease), color 0.3s, font-style 0.3s;
+  display: inline-block;
+  transform: translateY(120%);
+}
+#menu.open .menu-links a .t { transform: translateY(0); }
+.menu-links a:hover .t { color: var(--gold-hot); font-style: italic; transform: translateX(0.75rem); }
+.menu-side {
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 2.5rem;
+  border-left: 1px solid var(--line); padding-left: 3rem;
+}
+.menu-side .blk .k {
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 0.6rem;
+}
+.menu-side .blk .v { font-size: 1.05rem; font-weight: 300; color: var(--body); }
+.menu-side .blk a { color: var(--gold); text-decoration: none; font-style: italic; }
+#menuClose {
+  position: absolute; top: 1.4rem; right: var(--pad);
+  background: none; border: 1px solid var(--line-2); color: var(--cream);
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; padding: 0.7rem 1.3rem; border-radius: 99px;
+  transition: background 0.3s, color 0.3s;
+}
+#menuClose:hover { background: var(--rust); border-color: var(--rust); color: var(--cream); }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-    align-items: end;
-    height: 100%;
-  }
+/* ============ IMAGE SLOTS (auto-activate when photos uploaded) ============ */
+.slot {
+  position: relative; overflow: hidden;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 12px, rgba(212,169,78,0.045) 12px 13px),
+    linear-gradient(160deg, #17140e, #100e0a);
+  border: 1px solid var(--line);
+  display: block;
+}
+.slot img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  filter: saturate(0.92) contrast(1.04);
+}
+.slot .slot-glyph {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-58%);
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  color: rgba(212,169,78,0.14);
+  line-height: 1; user-select: none;
+}
+.slot .slot-tag {
+  position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.85rem;
+  font-family: var(--mono); font-size: 0.55rem; line-height: 1.7;
+  letter-spacing: 0.12em; color: var(--dim);
+  border: 1px dashed rgba(212,169,78,0.35);
+  background: rgba(10,9,8,0.72);
+  padding: 0.55rem 0.75rem;
+  text-transform: uppercase;
+}
+.slot .slot-tag b { color: var(--gold); font-weight: 500; display: block; letter-spacing: 0.22em; }
+.slot.filled .slot-tag, .slot.filled .slot-glyph { display: none; }
+.slot .cap {
+  position: absolute; left: 0; bottom: 0; z-index: 2;
+  font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--cream);
+  background: rgba(10,9,8,0.78); backdrop-filter: blur(6px);
+  padding: 0.5rem 0.9rem;
+  display: none;
+}
+.slot.filled .cap { display: block; }
 
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 70vh;
-  }
+/* ============ SHARED SECTION CHROME ============ */
+section { position: relative; }
+.wrap { padding: clamp(6rem, 12vh, 9rem) var(--pad); position: relative; }
+.eyebrow {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 1.75rem;
+  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+.eyebrow .num {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.24em;
+  color: var(--gold);
+}
+.eyebrow .rule { height: 1px; background: var(--line); }
+.eyebrow .tag {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.28em;
+  color: var(--dim); text-transform: uppercase;
+}
+h2.big {
+  font-weight: 250; font-variation-settings: "opsz" 144;
+  font-size: clamp(2.9rem, 7vw, 6.5rem);
+  line-height: 0.98; letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+h2.big em { font-style: italic; color: var(--gold); font-weight: 300; }
+h2.big .ghost {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,231,211,0.5);
+}
+.lede {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem); font-weight: 300;
+  line-height: 1.75; color: var(--body);
+  max-width: 640px; margin-bottom: clamp(3rem, 7vh, 5rem);
+}
+.lede strong { color: var(--cream); font-weight: 400; }
 
-  .hero-top-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 2rem;
-  }
+/* reveal system */
+.rev { opacity: 0; transform: translateY(42px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0s); }
+.rev.in { opacity: 1; transform: none; }
 
-  .hero-top-meta-block { display: flex; flex-direction: column; gap: 0.35rem; }
-  .hero-top-meta-block .label { color: var(--ink-faint); }
-  .hero-top-meta-block .val { color: var(--ink); }
+/* ============ HERO ============ */
+#hero {
+  min-height: 100vh;
+  padding: clamp(6.5rem, 14vh, 9rem) var(--pad) 3rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+#dust { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; flex: 1; }
 
-  h1.display {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(4rem, 11vw, 12rem);
-    line-height: 0.86;
-    font-weight: 300;
-    letter-spacing: -0.04em;
-    margin-bottom: 1rem;
-    font-variation-settings: "opsz" 144;
-  }
-  h1.display .italic {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--gold-dark);
-  }
-  h1.display .small {
-    display: block;
-    font-size: 0.25em;
-    font-style: italic;
-    font-weight: 300;
-    color: var(--ink-mute);
-    letter-spacing: 0;
-    margin-top: 1rem;
-    line-height: 1.4;
-    max-width: 600px;
-  }
+.hero-meta {
+  display: flex; gap: clamp(1.5rem, 4vw, 4rem); flex-wrap: wrap;
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+.hero-meta .b { display: flex; flex-direction: column; gap: 0.4rem; }
+.hero-meta .k { color: var(--faint); }
+.hero-meta .v { color: var(--cream); }
 
-  .hero-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 3rem;
-    gap: 3rem;
-  }
+.h-name { position: relative; }
+.h-line { overflow: hidden; display: block; }
+.h-line .txt {
+  display: inline-block;
+  font-weight: 220; font-variation-settings: "opsz" 144;
+  font-size: clamp(3.6rem, 11.5vw, 11rem);
+  line-height: 0.92; letter-spacing: -0.045em;
+  transform: translateY(115%);
+  transition: transform 1.1s var(--ease);
+}
+.h-line:nth-child(2) .txt { transition-delay: 0.12s; font-style: italic; color: transparent; -webkit-text-stroke: 1.5px var(--gold); font-weight: 300; }
+body.loaded .h-line .txt { transform: translateY(0); }
 
-  .hero-intro {
-    font-size: 1.05rem;
-    color: var(--ink-light);
-    line-height: 1.65;
-    max-width: 440px;
-    font-weight: 300;
-  }
-  .hero-intro em { color: var(--gold-dark); font-style: italic; }
+.h-sub {
+  margin-top: 2rem; max-width: 560px;
+  font-size: clamp(0.98rem, 1.3vw, 1.15rem); font-weight: 300;
+  line-height: 1.7; color: var(--body);
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 1s var(--ease) 0.55s, transform 1s var(--ease) 0.55s;
+}
+body.loaded .h-sub { opacity: 1; transform: none; }
+.h-sub em { color: var(--gold); font-style: italic; }
 
-  .hero-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-end;
-  }
-  .scroll-cue {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .scroll-cue::after {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 0.5px;
-    background: var(--ink-mute);
-    animation: extend 2s infinite ease-in-out;
-  }
-  @keyframes extend {
-    0%, 100% { width: 12px; }
-    50% { width: 32px; }
-  }
+.hero-foot {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-top: 2.5rem; gap: 2rem;
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--dim);
+  opacity: 0; transition: opacity 1s ease 0.9s;
+}
+body.loaded .hero-foot { opacity: 1; }
+.scroll-cue { display: flex; align-items: center; gap: 0.75rem; }
+.scroll-cue .stem { width: 1px; height: 44px; background: var(--line-2); position: relative; overflow: hidden; }
+.scroll-cue .stem::after { content: ''; position: absolute; top: -50%; left: 0; width: 100%; height: 50%; background: var(--gold-hot); animation: drip 1.8s var(--ease) infinite; }
+@keyframes drip { 0% { top: -50%; } 100% { top: 110%; } }
 
-  /* HERO RIGHT — CHESS BOARD */
-  .hero-right {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding-bottom: 1rem;
-  }
+/* hero portrait */
+.h-portrait { position: relative; opacity: 0; transform: translateY(30px) rotate(1.5deg); transition: opacity 1.2s var(--ease) 0.7s, transform 1.2s var(--ease) 0.7s; }
+body.loaded .h-portrait { opacity: 1; transform: rotate(1.5deg); }
+.h-portrait .slot { aspect-ratio: 3/4; width: 100%; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.65); }
+.h-portrait::before {
+  content: ''; position: absolute; inset: -14px 14px 14px -14px;
+  border: 1px solid rgba(212,169,78,0.4); z-index: -1;
+}
+.badge {
+  position: absolute; left: -3.4rem; bottom: -3.4rem; width: 132px; height: 132px;
+  z-index: 3; pointer-events: none;
+}
+.badge svg { width: 100%; height: 100%; animation: spin 22s linear infinite; overflow: visible; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.badge text { font-family: var(--mono); font-size: 8.4px; letter-spacing: 0.32em; fill: var(--gold); text-transform: uppercase; }
+.badge .core {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 1.9rem; color: var(--cream);
+}
 
-  .chess-board {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    width: 100%;
-    aspect-ratio: 1;
-    border: 1px solid var(--ink);
-    box-shadow: 12px 12px 0 var(--paper-3);
-    position: relative;
-  }
-  .chess-board::before {
-    content: 'POSITION · KASPAROV V. TOPALOV 1999';
-    position: absolute;
-    bottom: -1.5rem;
-    left: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--ink-mute);
-  }
-  .sq {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
-    line-height: 1;
-    position: relative;
-  }
-  .sq.l { background: var(--paper-2); }
-  .sq.d { background: var(--ink); color: var(--paper); }
-  .sq.l .p-w { color: var(--ink); }
-  .sq.l .p-b { color: var(--gold-dark); }
-  .sq.d .p-w { color: var(--paper); }
-  .sq.d .p-b { color: var(--gold-light); }
-  .sq .highlight {
-    position: absolute;
-    inset: 4px;
-    border: 1.5px solid var(--rust);
-    pointer-events: none;
-  }
+/* ============ MARQUEE ============ */
+.marquee {
+  overflow: hidden; white-space: nowrap;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 1.4rem 0; background: var(--coal);
+  position: relative;
+}
+.marquee .track { display: inline-flex; animation: slide 38s linear infinite; will-change: transform; }
+.marquee.rtl .track { animation-direction: reverse; }
+.marquee span {
+  font-family: var(--serif); font-weight: 250;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  letter-spacing: -0.02em; line-height: 1;
+  padding-right: 2.5rem;
+}
+.marquee span i { font-style: italic; color: transparent; -webkit-text-stroke: 1px var(--gold); }
+.marquee span b { font-weight: 250; color: var(--gold); padding: 0 1rem; }
+@keyframes slide { to { transform: translateX(-50%); } }
 
-  .hero-quote {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--ink-mute);
-    line-height: 1.6;
-    padding-left: 1rem;
-    border-left: 1px solid var(--gold);
-    margin-top: 1.5rem;
-  }
+/* ============ MANIFESTO (scroll word-fill) ============ */
+#manifesto { height: 320vh; position: relative; background: var(--void); }
+.mani-sticky {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0 var(--pad); max-width: 1150px; margin: 0 auto;
+}
+.mani-label {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 2.2rem;
+}
+#maniText {
+  font-weight: 260; font-variation-settings: "opsz" 144;
+  font-size: clamp(1.7rem, 3.6vw, 3.4rem);
+  line-height: 1.32; letter-spacing: -0.02em;
+  max-width: 1000px;
+}
+#maniText .w { color: rgba(240,231,211,0.13); transition: color 0.35s linear; }
+#maniText .w.lit { color: var(--cream); }
+#maniText .w.hl.lit { color: var(--gold-hot); font-style: italic; }
+#maniText .w.strike.lit { color: var(--faint); text-decoration: line-through; text-decoration-thickness: 1px; }
+.pillars {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--line); border: 1px solid var(--line);
+  margin-top: 3.2rem;
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.pillars.show { opacity: 1; transform: none; }
+.pillar { background: var(--void); padding: 1.4rem 1.5rem; }
+.pillar .pn { font-family: var(--mono); font-size: 0.58rem; color: var(--gold); letter-spacing: 0.2em; }
+.pillar .pt { font-size: 1.15rem; font-style: italic; font-weight: 350; margin: 0.5rem 0 0.4rem; }
+.pillar .pd { font-size: 0.8rem; color: var(--dim); font-weight: 300; line-height: 1.6; }
 
-  /* SECTION GENERAL */
-  section {
-    padding: 8rem 3rem;
-    position: relative;
-  }
+/* ============ 01 ORIGIN ============ */
+#origin { background: var(--coal); }
+.origin-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(3rem, 6vw, 6rem); align-items: start; }
+.dossier {
+  border: 1px solid var(--line-2); position: relative;
+  padding: 2.2rem 2rem 1.4rem; background: var(--panel);
+  margin-bottom: 3rem;
+}
+.dossier::before {
+  content: 'PERSONAL DOSSIER · UNREDACTED';
+  position: absolute; top: -0.6rem; left: 1.5rem;
+  background: var(--coal); padding: 0 0.6rem;
+  font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.26em; color: var(--gold);
+}
+.d-row {
+  display: grid; grid-template-columns: 120px 1fr; gap: 1rem;
+  padding: 0.8rem 0; border-bottom: 1px dashed var(--line); align-items: baseline;
+}
+.d-row:last-child { border-bottom: 0; }
+.d-row .k { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); }
+.d-row .v { font-size: 0.98rem; font-weight: 350; }
+.d-row .v em { color: var(--gold); font-style: italic; }
 
-  .section-divider {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 0.5px solid var(--line);
-  }
-  .section-number {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--gold-dark);
-  }
-  .section-line { height: 0.5px; background: var(--line); }
-  .section-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
+.bio p { font-size: 1.04rem; font-weight: 300; line-height: 1.85; color: var(--body); margin-bottom: 1.4rem; }
+.bio p strong { color: var(--cream); font-weight: 450; }
+.bio .drop::first-letter {
+  font-size: 4.6rem; font-style: italic; font-weight: 250; float: left;
+  line-height: 0.8; padding: 0.35rem 0.7rem 0 0; color: var(--gold);
+}
+.bio .pull {
+  font-style: italic; font-weight: 300; color: var(--gold-hot);
+  font-size: 1.45rem; line-height: 1.5;
+  padding: 1.4rem 0 1.4rem 1.8rem; border-left: 2px solid var(--gold);
+  margin: 1.8rem 0;
+}
 
-  h2.section-h {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1;
-    font-weight: 300;
-    letter-spacing: -0.025em;
-    margin-bottom: 2.5rem;
-    font-variation-settings: "opsz" 144;
-  }
-  h2.section-h em { font-style: italic; color: var(--gold-dark); }
+.photo-stack { position: relative; min-height: 640px; }
+.photo-stack .slot { position: absolute; box-shadow: 0 30px 70px -18px rgba(0,0,0,0.7); }
+.ps-1 { width: 62%; aspect-ratio: 4/5; top: 0; left: 0; transform: rotate(-2.4deg); z-index: 2; }
+.ps-2 { width: 58%; aspect-ratio: 3/2; top: 34%; right: 0; transform: rotate(1.8deg); z-index: 3; }
+.ps-3 { width: 48%; aspect-ratio: 1/1; bottom: 0; left: 8%; transform: rotate(-1.2deg); z-index: 1; }
 
-  .section-lede {
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: var(--ink-light);
-    max-width: 640px;
-    font-weight: 300;
-    margin-bottom: 4rem;
-  }
+/* ============ 02 ACADEMICS ============ */
+#academics { background: var(--void); }
+.acad-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(3rem, 6vw, 6rem); align-items: start; }
+.course {
+  display: grid; grid-template-columns: 3.4rem 1fr auto; gap: 1.4rem; align-items: center;
+  padding: 1.5rem 0.75rem; border-bottom: 1px solid var(--line);
+  transition: background 0.4s, padding-left 0.4s var(--ease);
+}
+.course:first-child { border-top: 1px solid var(--line); }
+.course:hover { background: var(--coal-2); padding-left: 1.6rem; }
+.course .cn { font-family: var(--mono); font-size: 0.62rem; color: var(--gold); letter-spacing: 0.12em; }
+.course .ct { font-size: 1.3rem; font-weight: 350; letter-spacing: -0.01em; }
+.course .cd { font-size: 0.8rem; color: var(--dim); font-style: italic; margin-top: 0.3rem; font-weight: 300; line-height: 1.55; }
+.course .lvl {
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.2em;
+  padding: 0.45rem 0.8rem; border: 1px solid var(--line-2); color: var(--body);
+  text-transform: uppercase; border-radius: 99px; white-space: nowrap;
+}
+.course .lvl.hl { border-color: var(--gold-deep); color: var(--gold); }
 
-  /* MANIFESTO SECTION */
-  .manifesto {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 10rem 3rem;
-    position: relative;
-  }
-  .manifesto .grain { opacity: 0.6; }
-  .manifesto-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: start;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .manifesto-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 2rem;
-  }
-  .manifesto-text {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.6rem, 2.2vw, 2.4rem);
-    line-height: 1.35;
-    font-weight: 300;
-    letter-spacing: -0.015em;
-  }
-  .manifesto-text .em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .manifesto-text .strike {
-    text-decoration: line-through;
-    color: var(--ink-faint);
-    text-decoration-thickness: 1px;
-  }
-  .manifesto-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    padding-top: 1rem;
-  }
-  .manifesto-item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1.25rem;
-    align-items: baseline;
-    padding-bottom: 1.25rem;
-    border-bottom: 0.5px solid rgba(245,241,232,0.1);
-  }
-  .manifesto-item-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold-light);
-    letter-spacing: 0.1em;
-  }
-  .manifesto-item-text {
-    font-size: 0.95rem;
-    color: var(--paper-2);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-  .manifesto-item-text strong {
-    color: var(--paper);
-    font-style: italic;
-    font-weight: 400;
-  }
+.awards-side .aw-h { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--dim); margin-bottom: 1.4rem; }
+.award {
+  border-left: 2px solid var(--gold); background: var(--panel);
+  padding: 1.1rem 1.3rem; margin-bottom: 0.8rem;
+  transition: transform 0.4s var(--ease), background 0.4s;
+}
+.award:hover { transform: translateX(8px); background: var(--coal-2); }
+.award .an { font-size: 1.02rem; font-weight: 400; }
+.award .am { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-top: 0.3rem; }
 
-  /* ABOUT — DOSSIER LAYOUT */
-  .dossier {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 5rem;
-    align-items: start;
-  }
+/* ============ 03 CHESS CINEMA ============ */
+#cinema { height: 640vh; position: relative; background: var(--board-night); }
+.cin-sticky {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding: 0 var(--pad);
+}
+.cin-stage {
+  display: grid; grid-template-columns: auto 1fr; gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center; width: 100%; max-width: 1350px;
+}
+.board-wrap { position: relative; width: min(74vmin, 580px); }
+.board-frame { position: relative; padding: 4.5%; border: 1px solid var(--line-2); background: #0a0f0a; }
+#board {
+  display: grid; grid-template-columns: repeat(8, 1fr);
+  width: 100%; aspect-ratio: 1; position: relative;
+  border: 1px solid rgba(212,169,78,0.3);
+}
+#board .sq { position: relative; display: flex; align-items: center; justify-content: center; }
+#board .sq.l { background: #26241a; }
+#board .sq.d { background: #131710; }
+#board .sq .pc {
+  font-size: clamp(1.4rem, 5.6vmin, 2.8rem); line-height: 1;
+  transition: transform 0.25s var(--ease);
+  text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+#board .sq .pc.w { color: var(--cream); }
+#board .sq .pc.b { color: var(--gold); }
+#board .sq.from::after, #board .sq.to::after {
+  content: ''; position: absolute; inset: 0;
+  border: 2px solid var(--rust); pointer-events: none;
+}
+#board .sq.from::after { opacity: 0.45; }
+#board .sq.to::after { box-shadow: inset 0 0 22px rgba(224,92,46,0.25); }
+.board-files, .board-ranks { position: absolute; display: flex; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0; color: var(--faint); }
+.board-files { bottom: 1%; left: 4.5%; right: 4.5%; justify-content: space-around; }
+.board-ranks { flex-direction: column; top: 4.5%; bottom: 4.5%; left: 1%; justify-content: space-around; }
+.board-caption {
+  margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
+}
+.board-caption .res { color: var(--gold); }
 
-  .dossier-card {
-    background: var(--paper-2);
-    border: 0.5px solid var(--line);
-    padding: 2rem;
-    position: relative;
-  }
-  .dossier-card::before {
-    content: 'CONFIDENTIAL · PERSONAL DOSSIER';
-    position: absolute;
-    top: -0.55rem;
-    left: 1.5rem;
-    background: var(--paper);
-    padding: 0 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--gold-dark);
-  }
-  .dossier-card-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .dossier-row {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 1rem;
-    padding: 0.85rem 0;
-    border-bottom: 0.5px dashed var(--line);
-    align-items: baseline;
-  }
-  .dossier-row:last-child { border-bottom: none; }
-  .dossier-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .dossier-val {
-    font-family: 'Fraunces', serif;
-    font-size: 0.95rem;
-    color: var(--ink);
-    font-weight: 400;
-  }
-  .dossier-val em { color: var(--gold-dark); font-style: italic; }
+.cin-panel { max-width: 520px; }
+.cin-eyebrow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 1.1rem; min-height: 1em; }
+.cin-move {
+  font-family: var(--mono); font-weight: 300;
+  font-size: clamp(1.6rem, 3vw, 2.6rem); letter-spacing: 0.04em;
+  color: var(--cream); margin-bottom: 1.6rem;
+  font-variant-numeric: tabular-nums; min-height: 1.2em;
+}
+.cin-move .who { font-size: 0.45em; color: var(--faint); letter-spacing: 0.28em; margin-left: 1rem; text-transform: uppercase; }
+.cin-title {
+  font-weight: 260; font-variation-settings: "opsz" 144;
+  font-size: clamp(1.9rem, 3.4vw, 3.2rem); line-height: 1.06; letter-spacing: -0.025em;
+  margin-bottom: 1.2rem; min-height: 2.1em;
+}
+.cin-title em { font-style: italic; color: var(--gold); }
+.cin-text { font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--body); min-height: 6em; }
+.cin-tape {
+  margin-top: 2rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em;
+  color: var(--faint); white-space: nowrap; overflow: hidden;
+  padding-top: 1.2rem; border-top: 1px solid var(--line);
+}
+.cin-tape b { color: var(--gold-hot); font-weight: 500; }
+.cin-hint {
+  position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.34em;
+  text-transform: uppercase; color: var(--dim);
+  display: flex; align-items: center; gap: 0.8rem;
+  transition: opacity 0.6s;
+}
+.cin-hint::before, .cin-hint::after { content: ''; width: 42px; height: 1px; background: var(--line-2); }
+.cin-hint.gone { opacity: 0; }
+.cin-progress { position: absolute; right: var(--pad); top: 50%; transform: translateY(-50%); width: 2px; height: 180px; background: var(--line); }
+.cin-progress .fill { width: 100%; background: var(--gold); height: 0%; }
 
-  .biography p {
-    font-size: 1.05rem;
-    line-height: 1.85;
-    color: var(--ink-light);
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-  }
-  .biography p strong {
-    font-weight: 500;
-    color: var(--ink);
-  }
-  .biography .pull {
-    font-style: italic;
-    color: var(--gold-dark);
-    font-size: 1.4rem;
-    line-height: 1.5;
-    padding: 1.5rem 0 1.5rem 2rem;
-    border-left: 2px solid var(--gold);
-    margin: 1.5rem 0;
-  }
-  .first-letter::first-letter {
-    font-family: 'Fraunces', serif;
-    font-size: 4.5rem;
-    font-style: italic;
-    font-weight: 300;
-    float: left;
-    line-height: 0.85;
-    padding: 0.3rem 0.6rem 0 0;
-    color: var(--gold-dark);
-  }
+/* chess photos + outro inside chess-night */
+#chessPhotos { background: var(--board-night); }
+.chess-photo-row { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 2rem; align-items: stretch; margin-top: 1rem; }
+.chess-photo-row .slot.wide { aspect-ratio: 16/9; }
+.chess-photo-row .slot.tall { aspect-ratio: 3/4; }
+.decade {
+  display: flex; gap: 3.5rem; flex-wrap: wrap; margin-top: 3.5rem;
+  padding-top: 2.5rem; border-top: 1px solid var(--line);
+}
+.decade .dk { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.5rem; }
+.decade .dv { font-size: 1.6rem; font-weight: 260; font-style: italic; color: var(--cream); }
+.decade .dv b { color: var(--gold); font-weight: 300; }
 
-  /* ACADEMICS */
-  .academics {
-    background: var(--paper-2);
-  }
-  .academic-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-  }
+/* ============ 04 PHYSICAL ============ */
+#physical { background: var(--ember-night); }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: clamp(3rem, 7vh, 5rem); }
+.stat { background: var(--ember-night); padding: clamp(1.8rem, 3.5vw, 3rem); }
+.stat .sk { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.2rem; }
+.stat .sv {
+  font-weight: 220; font-variation-settings: "opsz" 144;
+  font-size: clamp(3.4rem, 7.5vw, 6.4rem); line-height: 0.9; letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.stat .sv .unit { font-size: 0.32em; font-style: italic; color: var(--dim); margin-left: 0.35rem; font-weight: 300; }
+.stat .sd { font-family: var(--mono); font-size: 0.62rem; color: var(--gold); letter-spacing: 0.08em; margin-top: 0.9rem; }
+.stat .sp { font-size: 0.85rem; color: var(--dim); font-style: italic; margin-top: 0.7rem; font-weight: 300; line-height: 1.6; }
 
-  .courses {
-    display: flex;
-    flex-direction: column;
-  }
-  .course {
-    display: grid;
-    grid-template-columns: 50px 1fr auto;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 1.5rem 0;
-    border-bottom: 0.5px solid var(--line);
-    transition: padding-left 0.3s ease;
-  }
-  .course:hover { padding-left: 1rem; }
-  .course-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold-dark);
-    letter-spacing: 0.1em;
-  }
-  .course-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
-    color: var(--ink);
-    font-weight: 400;
-  }
-  .course-name .level {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    color: var(--gold-dark);
-    margin-left: 0.75rem;
-    text-transform: uppercase;
-  }
-  .course-desc {
-    font-size: 0.78rem;
-    color: var(--ink-mute);
-    margin-top: 0.25rem;
-    font-style: italic;
-    line-height: 1.5;
-  }
-  .course-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    border: 0.5px solid var(--line);
-    padding: 0.35rem 0.7rem;
-    background: var(--paper);
-  }
+.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; margin-bottom: clamp(3rem, 7vh, 5rem); }
+.ba {
+  position: relative; aspect-ratio: 4/5; overflow: hidden;
+  border: 1px solid var(--line-2); user-select: none; touch-action: none;
+}
+.ba .pane { position: absolute; inset: 0; }
+.ba .pane.after { clip-path: inset(0 0 0 var(--x, 50%)); }
+.ba .pane .slot { position: absolute; inset: 0; border: 0; }
+.ba .divider {
+  position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px;
+  background: var(--gold-hot); z-index: 5; transform: translateX(-1px);
+  pointer-events: none;
+}
+.ba .handle {
+  position: absolute; top: 50%; left: var(--x, 50%); z-index: 6;
+  transform: translate(-50%,-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--gold-hot); color: var(--void);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.05em;
+  pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.ba .chip {
+  position: absolute; top: 1rem; z-index: 4;
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.22em;
+  background: rgba(10,9,8,0.8); color: var(--cream);
+  padding: 0.45rem 0.8rem; text-transform: uppercase;
+}
+.ba .chip.l { left: 1rem; } .ba .chip.r { right: 1rem; color: var(--gold-hot); }
+.ba input[type=range] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; z-index: 10; margin: 0;
+}
+.ba-copy h3 { font-size: clamp(1.7rem, 2.6vw, 2.4rem); font-weight: 280; font-style: italic; color: var(--gold-hot); margin-bottom: 1.1rem; line-height: 1.15; }
+.ba-copy p { font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--body); margin-bottom: 1.2rem; }
+.phys-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
+.phys-cols h3 { font-size: 1.9rem; font-weight: 280; font-style: italic; color: var(--gold-hot); margin-bottom: 1rem; line-height: 1.2; }
+.phys-cols p { font-size: 0.98rem; font-weight: 300; line-height: 1.8; color: var(--body); margin-bottom: 1.1rem; }
+.phys-cols .slot { aspect-ratio: 16/10; margin-top: 1.4rem; }
 
-  .awards {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-  .awards-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 1rem;
-  }
-  .award {
-    background: var(--paper);
-    border-left: 2px solid var(--gold);
-    padding: 1rem 1.25rem;
-  }
-  .award-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1rem;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
-  }
-  .award-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+/* ============ 05 EXPERIENCE ============ */
+#experience { background: var(--coal); }
+.timeline { position: relative; padding-left: clamp(2.5rem, 5vw, 4rem); max-width: 880px; }
+.timeline .rail { position: absolute; left: 0.55rem; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--line); }
+.timeline .rail .fill { width: 100%; height: 0%; background: var(--gold); transition: height 0.15s linear; }
+.tl { position: relative; padding-bottom: clamp(3rem, 6vh, 4.5rem); }
+.tl::before {
+  content: ''; position: absolute; left: calc(-1 * clamp(2.5rem, 5vw, 4rem) + 0.2rem); top: 0.45rem;
+  width: 0.75rem; height: 0.75rem; border-radius: 50%;
+  background: var(--coal); border: 1.5px solid var(--gold);
+}
+.tl .td { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.tl .tt { font-size: clamp(1.5rem, 2.4vw, 2.1rem); font-weight: 320; letter-spacing: -0.015em; }
+.tl .to { font-style: italic; font-weight: 300; color: var(--gold-hot); font-size: 1.05rem; margin: 0.3rem 0 1rem; }
+.tl .tx { font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--body); max-width: 640px; }
+.tl .tx em { color: var(--cream); }
 
-  /* CHESS SECTION */
-  .chess-section {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .chess-section h2.section-h em { color: var(--gold-light); }
-  .chess-section .section-line { background: rgba(245,241,232,0.15); }
-  .chess-section .section-name { color: var(--paper-2); }
-  .chess-section .section-lede { color: var(--paper-2); }
+/* ============ 06 LIBRARY (horizontal scroll) ============ */
+#library { height: 380vh; position: relative; background: var(--void); }
+.lib-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.lib-head { padding: 0 var(--pad); margin-bottom: 2.6rem; }
+.lib-track { display: flex; gap: 1.5rem; padding: 0 var(--pad); will-change: transform; align-items: stretch; }
+.bk {
+  flex: none; width: clamp(270px, 24vw, 330px);
+  border: 1px solid var(--line); background: var(--panel);
+  padding: 1.8rem 1.6rem 1.6rem; display: flex; flex-direction: column;
+  transition: border-color 0.4s, transform 0.5s var(--ease), background 0.4s;
+  position: relative; overflow: hidden;
+}
+.bk:nth-child(even) { transform: translateY(22px); }
+.bk:hover { border-color: var(--gold-deep); background: var(--coal-2); transform: translateY(-8px); }
+.bk:nth-child(even):hover { transform: translateY(14px); }
+.bk .bnum {
+  position: absolute; right: 0.6rem; top: -0.8rem;
+  font-size: 5rem; font-weight: 250; font-style: italic;
+  color: transparent; -webkit-text-stroke: 1px rgba(212,169,78,0.22);
+  line-height: 1; pointer-events: none;
+}
+.bk .bcat { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.6rem; }
+.bk .bt { font-size: 1.4rem; font-weight: 330; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 0.45rem; }
+.bk .ba2 { font-style: italic; font-weight: 300; font-size: 0.9rem; color: var(--dim); margin-bottom: 1.3rem; }
+.bk .bx { font-size: 0.85rem; font-weight: 300; line-height: 1.7; color: var(--body); padding-top: 1.1rem; border-top: 1px dashed var(--line); margin-top: auto; }
+.bk.feat { width: clamp(340px, 34vw, 480px); background: var(--gold); border-color: var(--gold); }
+.bk.feat .bcat { color: var(--void); opacity: 0.75; }
+.bk.feat .bt { color: var(--void); font-size: 1.75rem; }
+.bk.feat .ba2 { color: rgba(10,9,8,0.7); }
+.bk.feat .bx { color: rgba(10,9,8,0.85); border-color: rgba(10,9,8,0.25); }
+.bk.feat .bnum { -webkit-text-stroke-color: rgba(10,9,8,0.25); }
+.bk.feat .pages {
+  display: inline-block; margin-top: 1.2rem; font-family: var(--mono);
+  font-size: 0.58rem; letter-spacing: 0.2em; color: var(--void);
+  border: 1px solid rgba(10,9,8,0.5); padding: 0.5rem 0.9rem;
+}
+.lib-bar { margin: 2.6rem var(--pad) 0; height: 1px; background: var(--line); position: relative; }
+.lib-bar .fill { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--gold); }
 
-  .chess-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
+/* ============ 07 AMBITION ============ */
+#ambition { background: var(--star-night); overflow: hidden; }
+#stars { position: absolute; inset: 0; pointer-events: none; }
+#ambition .wrap { position: relative; z-index: 1; }
+.unis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: clamp(4rem, 8vh, 6rem); }
+.uni { background: var(--star-night); padding: 2.2rem 1.8rem; position: relative; transition: background 0.4s; overflow: hidden; }
+.uni:hover { background: #10141f; }
+.uni .ur { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.6rem; text-transform: uppercase; }
+.uni .un { font-size: 1.45rem; font-weight: 320; line-height: 1.12; letter-spacing: -0.015em; margin-bottom: 0.5rem; }
+.uni .un em { font-style: italic; color: var(--gold-hot); }
+.uni .ul { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 1rem; }
+.uni .uw { font-size: 0.85rem; font-style: italic; font-weight: 300; color: var(--dim); line-height: 1.7; }
+.uni::after {
+  content: attr(data-i); position: absolute; right: -0.4rem; bottom: -1.6rem;
+  font-size: 5.5rem; font-style: italic; font-weight: 250;
+  color: transparent; -webkit-text-stroke: 1px rgba(212,169,78,0.16);
+  pointer-events: none; line-height: 1;
+}
 
-  .chess-narrative {
-    font-size: 1.1rem;
-    line-height: 1.85;
-    color: var(--paper-2);
-    font-weight: 300;
-  }
-  .chess-narrative p { margin-bottom: 1.5rem; }
-  .chess-narrative strong {
-    color: var(--gold-light);
-    font-weight: 400;
-    font-style: italic;
-  }
+.roadmap { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 3rem); }
+.roadmap svg.link { position: absolute; top: 2.4rem; left: 8%; width: 84%; height: 20px; overflow: visible; pointer-events: none; }
+.roadmap svg.link path { stroke: var(--gold-deep); stroke-width: 1; fill: none; stroke-dasharray: 6 6; }
+.phase { position: relative; padding-top: 4.6rem; }
+.phase .ph-dot {
+  position: absolute; top: 1.9rem; left: 0;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1.5px solid var(--gold); background: var(--star-night);
+}
+.phase .ph-n { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+.phase .ph-t { font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 280; font-style: italic; margin-bottom: 0.8rem; letter-spacing: -0.015em; }
+.phase .ph-x { font-size: 0.95rem; font-weight: 300; line-height: 1.75; color: var(--body); }
+.dream {
+  margin-top: clamp(4rem, 8vh, 6rem); padding: clamp(2.2rem, 4vw, 3.5rem);
+  border: 1px solid rgba(212,169,78,0.35); position: relative;
+  display: flex; justify-content: space-between; align-items: center; gap: 2.5rem; flex-wrap: wrap;
+}
+.dream::before {
+  content: 'THE DREAM DESTINATION'; position: absolute; top: -0.6rem; left: 2rem;
+  background: var(--star-night); padding: 0 0.6rem;
+  font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.28em; color: var(--gold);
+}
+.dream .dt { font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 250; letter-spacing: -0.02em; line-height: 1.05; }
+.dream .dt em { font-style: italic; color: var(--gold-hot); }
+.dream .dx { font-size: 0.95rem; font-weight: 300; color: var(--body); max-width: 420px; line-height: 1.75; }
 
-  .chess-principles {
-    display: flex;
-    flex-direction: column;
-  }
-  .principle {
-    padding: 1.75rem 0;
-    border-bottom: 0.5px solid rgba(245,241,232,0.12);
-    display: grid;
-    grid-template-columns: 50px 1fr;
-    gap: 1.5rem;
-    align-items: baseline;
-  }
-  .principle-num {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    color: var(--gold-light);
-    font-weight: 300;
-  }
-  .principle-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
-  .principle-text {
-    font-size: 0.9rem;
-    color: var(--paper-3);
-    line-height: 1.65;
-    font-weight: 300;
-  }
+/* ============ 08 WRITING ============ */
+#writing { background: var(--coal); }
+.post {
+  display: grid; grid-template-columns: 4.5rem 1.3fr 1fr auto; gap: 2rem;
+  align-items: baseline; padding: 1.9rem 0.75rem;
+  border-bottom: 1px solid var(--line); text-decoration: none;
+  transition: background 0.4s, padding-left 0.45s var(--ease);
+}
+.post:first-child { border-top: 1px solid var(--line); }
+.post:hover { background: var(--coal-2); padding-left: 2rem; }
+.post .pn2 { font-family: var(--mono); font-size: 0.62rem; color: var(--faint); letter-spacing: 0.1em; }
+.post .pt2 { font-size: clamp(1.2rem, 1.8vw, 1.55rem); font-weight: 330; line-height: 1.3; color: var(--cream); letter-spacing: -0.012em; }
+.post .pt2 em { font-style: italic; color: var(--gold); }
+.post .px2 { font-size: 0.85rem; font-style: italic; font-weight: 300; color: var(--dim); line-height: 1.6; }
+.post .ps2 {
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 0.4rem 0.85rem; border-radius: 99px;
+  border: 1px solid var(--line-2); color: var(--dim); white-space: nowrap;
+}
+.post .ps2.live { border-color: var(--gold-deep); color: var(--gold); animation: pulse 2.4s infinite; }
 
-  /* PHYSICAL — STATS */
-  .physical-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    border-top: 0.5px solid var(--line);
-    border-left: 0.5px solid var(--line);
-  }
-  .stat-block {
-    border-right: 0.5px solid var(--line);
-    border-bottom: 0.5px solid var(--line);
-    padding: 2.5rem 2rem;
-    background: var(--paper);
-    position: relative;
-  }
-  .stat-block-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 1rem;
-  }
-  .stat-block-value {
-    font-family: 'Fraunces', serif;
-    font-size: 4.5rem;
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.75rem;
-    font-variation-settings: "opsz" 144;
-  }
-  .stat-block-value .unit {
-    font-size: 1.5rem;
-    color: var(--ink-mute);
-    font-style: italic;
-    margin-left: 0.25rem;
-  }
-  .stat-block-value .delta {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--gold-dark);
-    font-style: italic;
-    font-family: 'JetBrains Mono', monospace;
-    margin-top: 0.5rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-  }
-  .stat-block-desc {
-    font-size: 0.85rem;
-    color: var(--ink-mute);
-    line-height: 1.6;
-    font-style: italic;
-  }
+/* ============ 09 CONTACT ============ */
+#contact { background: var(--void); }
+#contact .wrap { padding-bottom: clamp(4rem, 8vh, 6rem); }
+.contact-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(3rem, 7vw, 7rem); align-items: start; }
+.contact-h {
+  font-weight: 230; font-variation-settings: "opsz" 144;
+  font-size: clamp(3.4rem, 9vw, 8.5rem); line-height: 0.94; letter-spacing: -0.04em;
+  margin-bottom: 2rem;
+}
+.contact-h em { font-style: italic; color: transparent; -webkit-text-stroke: 1.5px var(--gold); }
+.contact-x { font-size: 1.1rem; font-weight: 300; line-height: 1.8; color: var(--body); max-width: 520px; margin-bottom: 2.8rem; }
+.cta {
+  display: inline-flex; align-items: center; gap: 1rem;
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--void); background: var(--gold-hot);
+  padding: 1.25rem 2.4rem; border-radius: 99px; text-decoration: none;
+  transition: background 0.35s, transform 0.35s var(--ease), box-shadow 0.35s;
+  will-change: transform;
+}
+.cta:hover { background: var(--cream); box-shadow: 0 14px 44px rgba(212,169,78,0.28); }
+.cta .arr { transition: transform 0.35s var(--ease); }
+.cta:hover .arr { transform: translateX(6px); }
+.c-rows { display: flex; flex-direction: column; }
+.c-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem;
+  padding: 1.4rem 0.25rem; border-bottom: 1px solid var(--line);
+  text-decoration: none; color: var(--cream);
+  transition: padding-left 0.4s var(--ease), background 0.4s;
+}
+.c-row:first-child { border-top: 1px solid var(--line); }
+a.c-row:hover { padding-left: 1.2rem; background: var(--coal); }
+.c-row .ck { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+.c-row .cv { font-size: 0.98rem; font-weight: 300; }
 
-  .physical-narrative {
-    margin-top: 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-  .physical-narrative h3 {
-    font-family: 'Fraunces', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 1.25rem;
-    font-style: italic;
-    color: var(--gold-dark);
-  }
-  .physical-narrative p {
-    font-size: 1rem;
-    color: var(--ink-light);
-    line-height: 1.8;
-    margin-bottom: 1.25rem;
-    font-weight: 300;
-  }
+/* closing marquee + footer */
+.end-marquee { border-bottom: 0; background: var(--void); padding: 2rem 0; }
+.end-marquee span { font-size: clamp(3rem, 8vw, 7rem); font-weight: 230; }
+footer {
+  display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  padding: 2.2rem var(--pad);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--faint);
+}
+footer em { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0; color: var(--gold); font-size: 0.9rem; }
 
-  /* EXPERIENCE — TIMELINE */
-  .experience {
-    background: var(--paper-2);
-  }
-  .timeline {
-    position: relative;
-    padding-left: 3rem;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0.65rem;
-    top: 1rem;
-    bottom: 1rem;
-    width: 0.5px;
-    background: var(--line);
-  }
-  .tl-entry {
-    position: relative;
-    padding-bottom: 3.5rem;
-  }
-  .tl-entry::before {
-    content: '';
-    position: absolute;
-    left: -2.85rem;
-    top: 0.5rem;
-    width: 0.85rem;
-    height: 0.85rem;
-    background: var(--gold);
-    border-radius: 50%;
-    border: 2px solid var(--paper-2);
-  }
-  .tl-entry::after {
-    content: '';
-    position: absolute;
-    left: -2.5rem;
-    top: 1rem;
-    width: 2rem;
-    height: 0.5px;
-    background: var(--line);
-  }
-  .tl-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 0.5rem;
-  }
-  .tl-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    margin-bottom: 0.4rem;
-    letter-spacing: -0.01em;
-  }
-  .tl-org {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 1.05rem;
-    color: var(--gold-dark);
-    margin-bottom: 1rem;
-  }
-  .tl-desc {
-    font-size: 1rem;
-    color: var(--ink-light);
-    line-height: 1.75;
-    max-width: 640px;
-    font-weight: 300;
-  }
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1100px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .h-portrait { max-width: 420px; }
+  .badge { left: auto; right: -1.5rem; bottom: -2.5rem; width: 108px; height: 108px; }
+  .origin-grid, .acad-grid, .ba-grid, .phys-cols, .contact-grid { grid-template-columns: 1fr; }
+  .photo-stack { min-height: 0; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .photo-stack .slot { position: static; width: 100%; transform: none; }
+  .ps-3 { grid-column: span 2; aspect-ratio: 16/9; }
+  .unis { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .cin-stage { grid-template-columns: 1fr; gap: 1.5rem; justify-items: center; text-align: left; }
+  .board-wrap { width: min(58vmin, 420px); }
+  .cin-panel { max-width: 640px; width: 100%; }
+  .cin-title { min-height: 0; font-size: 1.6rem; }
+  .cin-text { min-height: 0; font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .cin-move { margin-bottom: 0.8rem; font-size: 1.3rem; }
+  .chess-photo-row { grid-template-columns: 1fr; }
+  .chess-photo-row .slot.tall { aspect-ratio: 16/10; }
+  .post { grid-template-columns: 3rem 1fr auto; }
+  .post .px2 { display: none; }
+  #menu { grid-template-columns: 1fr; }
+  .menu-side { border-left: 0; padding-left: 0; flex-direction: row; flex-wrap: wrap; gap: 2rem; }
+}
+@media (max-width: 700px) {
+  .nav-meta { display: none; }
+  .roadmap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .roadmap svg.link { display: none; }
+  .unis { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .decade { gap: 1.8rem; }
+  .post { grid-template-columns: 1fr; gap: 0.5rem; }
+  .post .ps2 { justify-self: start; }
+  .eyebrow { gap: 1rem; }
+  .eyebrow .tag { display: none; }
+  #manifesto { height: 260vh; }
+  #library { height: auto; }
+  .lib-sticky { position: static; height: auto; }
+  .lib-track { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1.5rem; -webkit-overflow-scrolling: touch; }
+  .bk { scroll-snap-align: start; width: 82vw; }
+  .bk:nth-child(even) { transform: none; }
+  .lib-bar { display: none; }
+  .h-portrait { margin-top: 1rem; }
+  .hero-foot { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+}
 
-  /* INTELLECTUAL — LIBRARY */
-  .library-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border-top: 0.5px solid var(--line);
-    border-left: 0.5px solid var(--line);
-    margin-bottom: 4rem;
-  }
-  .book {
-    padding: 2.25rem 2rem;
-    border-right: 0.5px solid var(--line);
-    border-bottom: 0.5px solid var(--line);
-    background: var(--paper);
-    transition: background 0.3s ease;
-    cursor: none;
-  }
-  .book:hover { background: var(--paper-2); }
-  .book-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  .book-cat {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-  }
-  .book-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: var(--ink-faint);
-  }
-  .book-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
-  .book-author {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: var(--ink-mute);
-    margin-bottom: 1rem;
-  }
-  .book-takeaway {
-    font-size: 0.85rem;
-    color: var(--ink-light);
-    line-height: 1.65;
-    padding-top: 1rem;
-    border-top: 0.5px dashed var(--line);
-    font-weight: 300;
-  }
-
-  .featured-essay {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 3.5rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 3rem;
-    align-items: center;
-    border: 0.5px solid var(--ink);
-    position: relative;
-  }
-  .featured-essay::before {
-    content: 'FEATURED · OPUS';
-    position: absolute;
-    top: -0.55rem;
-    left: 2rem;
-    background: var(--paper);
-    color: var(--ink);
-    padding: 0 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-  }
-  .essay-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 1rem;
-  }
-  .essay-title {
-    font-family: 'Fraunces', serif;
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-  .essay-title em { font-style: italic; color: var(--gold-light); }
-  .essay-desc {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--paper-2);
-    margin-bottom: 1.25rem;
-    font-weight: 300;
-  }
-  .essay-pages {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    color: var(--gold-light);
-    border: 0.5px solid var(--gold-light);
-    padding: 0.5rem 0.85rem;
-  }
-
-  /* AMBITION — UNIVERSITIES */
-  .universities {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border-top: 0.5px solid var(--line);
-    border-left: 0.5px solid var(--line);
-  }
-  .uni {
-    padding: 2.5rem 2rem;
-    border-right: 0.5px solid var(--line);
-    border-bottom: 0.5px solid var(--line);
-    background: var(--paper);
-    position: relative;
-  }
-  .uni-rank {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.15em;
-    color: var(--gold-dark);
-    margin-bottom: 1.25rem;
-  }
-  .uni-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
-  .uni-name em { font-style: italic; }
-  .uni-loc {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 1rem;
-  }
-  .uni-why {
-    font-size: 0.85rem;
-    line-height: 1.7;
-    color: var(--ink-mute);
-    font-style: italic;
-    font-weight: 300;
-  }
-
-  .career-roadmap {
-    margin-top: 5rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    position: relative;
-  }
-  .phase {
-    padding: 2rem;
-    position: relative;
-  }
-  .phase:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -0.6rem;
-    top: 2.25rem;
-    font-family: 'Fraunces', serif;
-    font-size: 1.4rem;
-    color: var(--gold);
-    z-index: 2;
-  }
-  .phase-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 1rem;
-  }
-  .phase-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-    color: var(--ink);
-  }
-  .phase-desc {
-    font-size: 0.92rem;
-    line-height: 1.7;
-    color: var(--ink-light);
-    font-weight: 300;
-  }
-
-  /* WRITING — INDEX */
-  .writing {
-    background: var(--paper);
-  }
-  .writing-index {
-    display: flex;
-    flex-direction: column;
-    border-top: 0.5px solid var(--line);
-  }
-  .post {
-    display: grid;
-    grid-template-columns: 100px 1fr 200px 100px;
-    gap: 2rem;
-    padding: 2rem 1rem;
-    align-items: baseline;
-    border-bottom: 0.5px solid var(--line);
-    transition: background 0.3s ease, padding-left 0.3s ease;
-  }
-  .post:hover {
-    background: var(--paper-2);
-    padding-left: 2rem;
-  }
-  .post-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.1em;
-  }
-  .post-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.3;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-  .post-title em { font-style: italic; color: var(--gold-dark); }
-  .post-summary {
-    font-size: 0.88rem;
-    color: var(--ink-mute);
-    line-height: 1.6;
-    font-style: italic;
-  }
-  .post-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    text-align: left;
-  }
-  .post-status {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    text-align: right;
-  }
-
-  /* CONTACT */
-  .contact {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 10rem 3rem;
-  }
-  .contact .section-name { color: var(--paper-2); }
-  .contact .section-line { background: rgba(245,241,232,0.15); }
-  .contact .section-number { color: var(--gold-light); }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 6rem;
-    align-items: start;
-  }
-  .contact-h {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.95;
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    margin-bottom: 2rem;
-    font-variation-settings: "opsz" 144;
-  }
-  .contact-h em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .contact-text {
-    font-size: 1.15rem;
-    line-height: 1.75;
-    color: var(--paper-2);
-    max-width: 560px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-  }
-
-  .contact-rows {
-    display: flex;
-    flex-direction: column;
-  }
-  .contact-row {
-    padding: 1.5rem 0;
-    border-bottom: 0.5px solid rgba(245,241,232,0.15);
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    text-decoration: none;
-    color: var(--paper);
-    transition: padding-left 0.3s ease;
-  }
-  .contact-row:hover {
-    padding-left: 1rem;
-  }
-  .contact-row-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-  }
-  .contact-row-val {
-    font-family: 'Fraunces', serif;
-    font-size: 1rem;
-    color: var(--paper);
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--ink);
-    color: var(--paper-3);
-    padding: 2.5rem 3rem;
-    border-top: 0.5px solid rgba(245,241,232,0.12);
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  footer .center { text-align: center; }
-  footer .right { text-align: right; }
-  footer em {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    text-transform: none;
-    color: var(--gold-light);
-    font-size: 0.85rem;
-    letter-spacing: 0;
-  }
-
-  /* SCROLL FADE-IN */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 1100px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .dossier, .academic-grid, .chess-grid, .physical-narrative, .featured-essay, .contact-grid, .manifesto-grid {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .physical-grid, .library-grid, .universities, .career-roadmap {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .post {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-    .phase:not(:last-child)::after { display: none; }
-  }
-  @media (max-width: 640px) {
-    body { cursor: auto; }
-    .cursor, .cursor-ring { display: none; }
-    nav { padding: 1rem 1.25rem; grid-template-columns: 1fr auto; }
-    .nav-meta { display: none; }
-    .nav-center { display: none; }
-    section, .manifesto, .contact { padding: 5rem 1.25rem; }
-    .hero { padding: 7rem 1.25rem 3rem; }
-    .physical-grid, .library-grid, .universities, .career-roadmap {
-      grid-template-columns: 1fr;
-    }
-    h1.display { font-size: 4rem; }
-    h2.section-h { font-size: 2.75rem; }
-    .contact-h { font-size: 2.75rem; }
-    .timeline { padding-left: 2rem; }
-    .tl-entry::before { left: -1.85rem; }
-    .tl-entry::after { left: -1.5rem; }
-  }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .rev { opacity: 1; transform: none; }
+  body.loaded .h-line .txt, .h-sub, .hero-foot, .h-portrait { transform: none; opacity: 1; }
+  .marquee .track { animation: none; }
+  body::after { animation: none; }
+}
 </style>
 </head>
 <body>
 
-<div class="cursor"></div>
-<div class="cursor-ring"></div>
+<!-- LOADER -->
+<div id="loader" aria-hidden="true">
+  <div class="knight">♞</div>
+  <div class="l-name">Mahmod Hammouda</div>
+  <div class="l-count" id="loadCount">00</div>
+</div>
 
-<nav>
-  <div class="nav-mark">M.<span>H.</span></div>
-  <div class="nav-center">
-    <a href="#about">Origin</a>
-    <a href="#academics">Academics</a>
-    <a href="#chess">Chess</a>
-    <a href="#physical">Physical</a>
-    <a href="#experience">Experience</a>
-    <a href="#library">Library</a>
-    <a href="#ambition">Ambition</a>
-    <a href="#writing">Writing</a>
-    <a href="#contact">Contact</a>
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="curRing"><span class="lbl"></span></div>
+
+<!-- PROGRESS -->
+<div id="bar"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-mark" href="#hero">M.<b>H.</b></a>
+  <div class="nav-right">
+    <span class="nav-meta"><span class="live"></span>Dubai · 25.2°N — Game in progress</span>
+    <button id="menuBtn" data-cursor="OPEN">Menu</button>
   </div>
-  <div class="nav-meta"><span class="live-dot"></span>Dubai · 2026</div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid">
-    <div class="hero-left">
+<!-- FULLSCREEN MENU -->
+<div id="menu" aria-hidden="true">
+  <button id="menuClose" data-cursor="CLOSE">Close</button>
+  <div class="menu-links">
+    <a href="#origin"><span class="n">1. e4</span><span class="t">Origin</span></a>
+    <a href="#academics"><span class="n">2. d4</span><span class="t">Academics</span></a>
+    <a href="#cinema"><span class="n">3. Nc3</span><span class="t">The Game</span></a>
+    <a href="#physical"><span class="n">4. Be3</span><span class="t">Physical</span></a>
+    <a href="#experience"><span class="n">5. Qd2</span><span class="t">Experience</span></a>
+    <a href="#library"><span class="n">6. f3</span><span class="t">Library</span></a>
+    <a href="#ambition"><span class="n">7. Nge2</span><span class="t">Ambition</span></a>
+    <a href="#writing"><span class="n">8. Bh6</span><span class="t">Writing</span></a>
+    <a href="#contact"><span class="n">9. Qxh6</span><span class="t">Contact</span></a>
+  </div>
+  <div class="menu-side">
+    <div class="blk">
+      <div class="k">Currently</div>
+      <div class="v">IB Diploma, Grade 12 — Dubai, UAE</div>
+    </div>
+    <div class="blk">
+      <div class="k">Next</div>
+      <div class="v">Engineering or Finance — Canada, 2026</div>
+    </div>
+    <div class="blk">
+      <div class="k">Reach out</div>
+      <div class="v"><a href="mailto:mahmod.h1@gemsisak.com">mahmod.h1@gemsisak.com</a></div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="dust"></canvas>
+  <div>
+    <div class="hero-meta">
+      <div class="b"><span class="k">Volume</span><span class="v">№ 02 — The Rebuild</span></div>
+      <div class="b"><span class="k">Location</span><span class="v">Dubai, UAE</span></div>
+      <div class="b"><span class="k">Subject</span><span class="v">M. Hammouda · 18</span></div>
+      <div class="b"><span class="k">Status</span><span class="v">Several moves ahead</span></div>
+    </div>
+    <div class="hero-inner">
       <div>
-        <div class="hero-top-meta">
-          <div class="hero-top-meta-block">
-            <span class="label">Volume</span>
-            <span class="val">№ 01 — Personal Archive</span>
-          </div>
-          <div class="hero-top-meta-block">
-            <span class="label">Edition</span>
-            <span class="val">2026 · Dubai, UAE</span>
-          </div>
-          <div class="hero-top-meta-block">
-            <span class="label">Subject</span>
-            <span class="val">M. Hammouda · Age 18</span>
-          </div>
-        </div>
-        <h1 class="display">
-          Mahmod<br>
-          <span class="italic">Hammouda</span>
-          <span class="small">A working archive of one student's thinking — chess, engineering, finance, faith. The record of someone trying to build something that matters before the world tells him what's possible.</span>
+        <h1 class="h-name" aria-label="Mahmod Hammouda">
+          <span class="h-line" aria-hidden="true"><span class="txt">Mahmod</span></span>
+          <span class="h-line" aria-hidden="true"><span class="txt">Hammouda</span></span>
         </h1>
-      </div>
-
-      <div class="hero-bottom">
-        <p class="hero-intro">
-          Trilingual IB student. Competitive chess player. Future engineer or financier. <em>Long-term, I'm not building a career — I'm building the foundation for ownership, for influence, for work that outlasts me.</em>
+        <p class="h-sub">
+          Trilingual IB student. Competitive chess player. Future engineer or financier.
+          <em>I'm not building a career — I'm building the foundation for ownership, for influence, for work that outlasts me.</em>
         </p>
-        <div class="hero-cta">
-          <div class="scroll-cue">Scroll · Begin</div>
+      </div>
+      <div class="h-portrait" data-plx="0.06">
+        <figure class="slot" data-cursor="THAT'S ME">
+          <img src="assets/hero-portrait.jpg" alt="Portrait of Mahmod Hammouda"
+               onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+          <span class="slot-glyph" aria-hidden="true">♞</span>
+          <div class="slot-tag"><b>Awaiting image</b>assets/hero-portrait.jpg — headshot, vertical 3:4</div>
+          <span class="cap">M. Hammouda — Dubai, 2026</span>
+        </figure>
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <defs><path id="circ" d="M 50 50 m -38 0 a 38 38 0 1 1 76 0 a 38 38 0 1 1 -76 0"/></defs>
+            <text><textPath href="#circ">Strategist · Student · Several moves ahead ·&#160;</textPath></text>
+          </svg>
+          <span class="core">♞</span>
         </div>
       </div>
     </div>
+  </div>
+  <div class="hero-foot">
+    <span>English · العربية · Français</span>
+    <div class="scroll-cue"><span>Scroll — white to move</span><span class="stem"></span></div>
+    <span>Mississauga → Dubai → next</span>
+  </div>
+</section>
 
-    <div class="hero-right">
-      <div class="chess-board" id="chessBoard"></div>
-      <div class="hero-quote">
-        "Chess is not a hobby for me — it is a reflection of how I think. Patiently. Several moves ahead. Always playing for position."
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Chess <b>·</b> <i>Strategy</i> <b>·</b> Engineering <b>·</b> <i>Finance</i> <b>·</b> Faith <b>·</b> <i>Discipline</i> <b>·</b> </span>
+    <span>Chess <b>·</b> <i>Strategy</i> <b>·</b> Engineering <b>·</b> <i>Finance</i> <b>·</b> Faith <b>·</b> <i>Discipline</i> <b>·</b> </span>
+  </div>
+</div>
+
+<!-- ============ MANIFESTO ============ -->
+<section id="manifesto" aria-label="Manifesto">
+  <div class="mani-sticky">
+    <div class="mani-label">§ Manifesto — read as you scroll</div>
+    <p id="maniText">
+      I am not interested in <span data-x="strike">credentials.</span> I am interested in <span data-x="hl">capacity</span> — the kind built through deliberate effort across every dimension that matters. Mind. Body. Spirit. Craft. Strategic. Deliberate. <span data-x="hl">Influential.</span> Visionary. Not adjectives — <span data-x="hl">outputs.</span>
+    </p>
+    <div class="pillars" id="pillars">
+      <div class="pillar"><div class="pn">01</div><div class="pt">Mind</div><div class="pd">Read voraciously. Stress-test what I learn. Write to clarify thinking, not perform it.</div></div>
+      <div class="pillar"><div class="pn">02</div><div class="pt">Body</div><div class="pd">Build the physical foundation that makes mental work sustainable for decades.</div></div>
+      <div class="pillar"><div class="pn">03</div><div class="pt">Spirit</div><div class="pd">Stay anchored in faith — purpose without it is performance.</div></div>
+      <div class="pillar"><div class="pn">04</div><div class="pt">Craft</div><div class="pd">Master one industry from the inside before trying to change it from above.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 ORIGIN ============ -->
+<section id="origin">
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">01 · ORIGIN — 1. e4</span><div class="rule"></div><span class="tag">Personal dossier</span></div>
+    <h2 class="big rev">Three countries.<br><em>One identity,</em> <span class="ghost">deliberately built.</span></h2>
+    <p class="lede rev">Born in Mississauga, formed in Dubai, defined by the discipline to hold both worlds at once — in three languages.</p>
+
+    <div class="origin-grid">
+      <div>
+        <div class="dossier rev">
+          <div class="d-row"><span class="k">Name</span><span class="v">Mahmod Hammouda</span></div>
+          <div class="d-row"><span class="k">Age</span><span class="v">18</span></div>
+          <div class="d-row"><span class="k">Origin</span><span class="v">Mississauga, Ontario</span></div>
+          <div class="d-row"><span class="k">Based</span><span class="v">Dubai, UAE</span></div>
+          <div class="d-row"><span class="k">Languages</span><span class="v">English · <em>Arabic</em> · Français</span></div>
+          <div class="d-row"><span class="k">Faith</span><span class="v">Muslim</span></div>
+          <div class="d-row"><span class="k">Program</span><span class="v">IB Diploma — Grade 12</span></div>
+          <div class="d-row"><span class="k">Aspires</span><span class="v"><em>Engineering or Finance</em></span></div>
+          <div class="d-row"><span class="k">Dream</span><span class="v">SpaceX</span></div>
+          <div class="d-row"><span class="k">Endgame</span><span class="v">Ownership</span></div>
+        </div>
+        <div class="bio rev">
+          <p class="drop">I grew up in <strong>Mississauga</strong>, shaped by Arabic heritage, educated in English, driven enough to develop French as a third language. Not because I had to — because being globally capable is a competitive advantage.</p>
+          <p>At 16, my family relocated to <strong>Dubai</strong>. No friends. No social safety net. No expectations to hide behind. The move was the most formative thing that has happened to me — a forced confrontation with who I actually was beneath comfort and familiarity.</p>
+          <div class="pull">Stripped of labels, I rebuilt deliberately. That process gave me clarity about my values, my goals, and what I am actually capable of.</div>
+          <p>What I am today is not a coincidence. I read across <strong>philosophy, finance, strategy, history</strong> — not because I was assigned to, but because I cannot stop. I play chess seriously. I train physically with the same intensity I bring to ideas. I think in <strong>systems and phases</strong>, not impulses.</p>
+        </div>
+      </div>
+      <div class="photo-stack rev" style="--d:0.15s">
+        <figure class="slot ps-1" data-plx="0.05" data-cursor="DUBAI">
+          <img src="assets/about-candid.jpg" alt="Candid photo of Mahmod" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+          <span class="slot-glyph" aria-hidden="true">♟</span>
+          <div class="slot-tag"><b>Awaiting image</b>assets/about-candid.jpg — candid photo, vertical 4:5</div>
+          <span class="cap">The rebuild — Dubai era</span>
+        </figure>
+        <figure class="slot ps-2" data-plx="-0.04" data-cursor="THE CITY">
+          <img src="assets/dubai.jpg" alt="Dubai skyline" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+          <span class="slot-glyph" aria-hidden="true">♜</span>
+          <div class="slot-tag"><b>Awaiting image</b>assets/dubai.jpg — Dubai / travel, landscape 3:2</div>
+          <span class="cap">25.2°N 55.3°E — home, for now</span>
+        </figure>
+        <figure class="slot ps-3" data-plx="0.03" data-cursor="THE DESK">
+          <img src="assets/workspace.jpg" alt="Workspace with books" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+          <span class="slot-glyph" aria-hidden="true">♝</span>
+          <div class="slot-tag"><b>Awaiting image</b>assets/workspace.jpg — desk / books, square</div>
+          <span class="cap">Where the work happens</span>
+        </figure>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MANIFESTO -->
-<section class="manifesto">
-  <div class="manifesto-grid">
-    <div>
-      <div class="manifesto-label">§ Manifesto · The four pillars</div>
-      <p class="manifesto-text">
-        I am not interested in <span class="strike">credentials</span>. I am interested in <span class="em">capacity</span> — the kind built through deliberate effort across every dimension that matters.<br><br>
-        Strategic. Deliberate. <span class="em">Influential.</span> Visionary. Not adjectives — outputs.
-      </p>
-    </div>
-    <div class="manifesto-list">
-      <div class="manifesto-item">
-        <span class="manifesto-item-num">01 ·</span>
-        <p class="manifesto-item-text"><strong>Mind.</strong> Read voraciously. Stress-test what I learn. Write to clarify thinking, not to perform it.</p>
-      </div>
-      <div class="manifesto-item">
-        <span class="manifesto-item-num">02 ·</span>
-        <p class="manifesto-item-text"><strong>Body.</strong> Build the physical foundation that makes mental work sustainable for decades.</p>
-      </div>
-      <div class="manifesto-item">
-        <span class="manifesto-item-num">03 ·</span>
-        <p class="manifesto-item-text"><strong>Spirit.</strong> Stay anchored in faith — purpose without it is performance.</p>
-      </div>
-      <div class="manifesto-item">
-        <span class="manifesto-item-num">04 ·</span>
-        <p class="manifesto-item-text"><strong>Craft.</strong> Master one industry from the inside before trying to change it from above.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ============ 02 ACADEMICS ============ -->
+<section id="academics">
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">02 · ACADEMICS — 2. d4</span><div class="rule"></div><span class="tag">The IB curriculum</span></div>
+    <h2 class="big rev">The <em>rigorous</em> path.</h2>
+    <p class="lede rev">Higher Level Mathematics, Physics, and Business Management — three of the most demanding subjects in pre-university education, chosen deliberately for their intersection of <strong>technical precision and strategic thinking</strong>.</p>
 
-<!-- ORIGIN / ABOUT -->
-<section id="about">
-  <div class="section-divider">
-    <span class="section-number">01 · ORIGIN</span>
-    <div class="section-line"></div>
-    <span class="section-name">Personal Dossier</span>
-  </div>
-  <h2 class="section-h">Who I <em>am</em>.</h2>
-  <p class="section-lede">
-    Three countries. Three languages. One identity, deliberately constructed. Born in Mississauga, formed in Dubai, defined by the discipline to hold both worlds at once.
-  </p>
-
-  <div class="dossier">
-    <div class="dossier-card">
-      <div class="dossier-card-inner">
-        <div class="dossier-row"><span class="dossier-label">Name</span><span class="dossier-val">Mahmod Hammouda</span></div>
-        <div class="dossier-row"><span class="dossier-label">Age</span><span class="dossier-val">18</span></div>
-        <div class="dossier-row"><span class="dossier-label">Origin</span><span class="dossier-val">Mississauga, Ontario</span></div>
-        <div class="dossier-row"><span class="dossier-label">Based</span><span class="dossier-val">Dubai, UAE</span></div>
-        <div class="dossier-row"><span class="dossier-label">Languages</span><span class="dossier-val">English · <em>Arabic</em> · Français</span></div>
-        <div class="dossier-row"><span class="dossier-label">Faith</span><span class="dossier-val">Muslim</span></div>
-        <div class="dossier-row"><span class="dossier-label">Program</span><span class="dossier-val">IB Diploma — Grade 12</span></div>
-        <div class="dossier-row"><span class="dossier-label">Aspires</span><span class="dossier-val"><em>Engineering or Finance</em></span></div>
-        <div class="dossier-row"><span class="dossier-label">Dream</span><span class="dossier-val">SpaceX</span></div>
-        <div class="dossier-row"><span class="dossier-label">Endgame</span><span class="dossier-val">Ownership</span></div>
-      </div>
-    </div>
-
-    <div class="biography">
-      <p class="first-letter">
-        I grew up in <strong>Mississauga</strong>, shaped by Arabic heritage, educated in English, driven enough to develop French as a third language. Not because I had to — because being globally capable is a competitive advantage.
-      </p>
-      <p>
-        At 16, my family relocated to <strong>Dubai</strong>. No friends. No social safety net. No expectations to hide behind. The move was the most formative thing that has happened to me — a forced confrontation with who I actually was beneath comfort and familiarity.
-      </p>
-      <div class="pull">
-        Stripped of labels, I rebuilt deliberately. That process is what gave me clarity about my values, my goals, and what I am actually capable of.
-      </div>
-      <p>
-        What I am today is not a coincidence. I read across <strong>philosophy, finance, strategy, history</strong> — not because I was assigned to, but because I cannot stop. I play chess seriously. I train physically with the same intensity I bring to ideas. I think in <strong>systems and phases</strong>, not impulses.
-      </p>
-      <p>
-        The awards confirm what the rest of this shows. I am someone who <strong>follows through</strong>.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ACADEMICS -->
-<section id="academics" class="academics">
-  <div class="section-divider">
-    <span class="section-number">02 · ACADEMICS</span>
-    <div class="section-line"></div>
-    <span class="section-name">The IB Curriculum</span>
-  </div>
-  <h2 class="section-h">The <em>rigorous</em> path.</h2>
-  <p class="section-lede">
-    Higher Level Mathematics, Higher Level Physics, Higher Level Business Management. Three of the most demanding subjects in pre-university education — chosen deliberately for their intersection of technical precision and strategic thinking.
-  </p>
-
-  <div class="academic-grid">
-    <div class="courses">
-      <div class="course">
-        <span class="course-num">/ 01</span>
-        <div>
-          <div class="course-name">Mathematics — Analysis & Approaches <span class="level">HL</span></div>
-          <div class="course-desc">The most rigorous mathematical curriculum available at the pre-university level.</div>
+    <div class="acad-grid">
+      <div class="rev">
+        <div class="course" data-cursor="HL">
+          <span class="cn">/ 01</span>
+          <div><div class="ct">Mathematics — Analysis &amp; Approaches</div><div class="cd">The most rigorous mathematical curriculum available at the pre-university level.</div></div>
+          <span class="lvl hl">Higher</span>
         </div>
-        <span class="course-tag">Higher Level</span>
-      </div>
-      <div class="course">
-        <span class="course-num">/ 02</span>
-        <div>
-          <div class="course-name">Physics <span class="level">HL</span></div>
-          <div class="course-desc">Foundation for engineering thinking — modeling, prediction, the language of systems.</div>
+        <div class="course" data-cursor="HL">
+          <span class="cn">/ 02</span>
+          <div><div class="ct">Physics</div><div class="cd">Foundation for engineering thinking — modeling, prediction, the language of systems.</div></div>
+          <span class="lvl hl">Higher</span>
         </div>
-        <span class="course-tag">Higher Level</span>
-      </div>
-      <div class="course">
-        <span class="course-num">/ 03</span>
-        <div>
-          <div class="course-name">Business Management <span class="level">HL</span></div>
-          <div class="course-desc">Strategic reasoning, finance fundamentals, how organizations actually function.</div>
+        <div class="course" data-cursor="HL">
+          <span class="cn">/ 03</span>
+          <div><div class="ct">Business Management</div><div class="cd">Strategic reasoning, finance fundamentals, how organizations actually function.</div></div>
+          <span class="lvl hl">Higher</span>
         </div>
-        <span class="course-tag">Higher Level</span>
-      </div>
-      <div class="course">
-        <span class="course-num">/ 04</span>
-        <div>
-          <div class="course-name">English Literature <span class="level">SL</span></div>
-          <div class="course-desc">The discipline of close reading and writing under constraint.</div>
+        <div class="course" data-cursor="SL">
+          <span class="cn">/ 04</span>
+          <div><div class="ct">English Literature</div><div class="cd">The discipline of close reading and writing under constraint.</div></div>
+          <span class="lvl">Standard</span>
         </div>
-        <span class="course-tag">Standard</span>
-      </div>
-      <div class="course">
-        <span class="course-num">/ 05</span>
-        <div>
-          <div class="course-name">Arabic Language <span class="level">SL</span></div>
-          <div class="course-desc">Heritage made literate — keeping the mother tongue formal, not just spoken.</div>
+        <div class="course" data-cursor="SL">
+          <span class="cn">/ 05</span>
+          <div><div class="ct">Arabic Language</div><div class="cd">Heritage made literate — keeping the mother tongue formal, not just spoken.</div></div>
+          <span class="lvl">Standard</span>
         </div>
-        <span class="course-tag">Standard</span>
-      </div>
-      <div class="course">
-        <span class="course-num">/ 06</span>
-        <div>
-          <div class="course-name">Environmental Systems <span class="level">SL</span></div>
-          <div class="course-desc">Systems thinking applied to ecology — interconnection at scale.</div>
+        <div class="course" data-cursor="SL">
+          <span class="cn">/ 06</span>
+          <div><div class="ct">Environmental Systems</div><div class="cd">Systems thinking applied to ecology — interconnection at scale.</div></div>
+          <span class="lvl">Standard</span>
         </div>
-        <span class="course-tag">Standard</span>
       </div>
-    </div>
-
-    <div class="awards">
-      <div class="awards-title">— Recognition</div>
-      <div class="award">
-        <div class="award-name">Honor Roll</div>
-        <div class="award-meta">Academic Excellence · 2025</div>
-      </div>
-      <div class="award">
-        <div class="award-name">Academic Scholarship</div>
-        <div class="award-meta">Awarded for Performance</div>
-      </div>
-      <div class="award">
-        <div class="award-name">Excellence in Mathematics</div>
-        <div class="award-meta">Subject Award</div>
-      </div>
-      <div class="award">
-        <div class="award-name">Excellence in Islamic Studies</div>
-        <div class="award-meta">Subject Award</div>
-      </div>
-      <div class="award">
-        <div class="award-name">Debate Club</div>
-        <div class="award-meta">Member — Three Consecutive Years</div>
+      <div class="awards-side rev" style="--d:0.15s">
+        <div class="aw-h">— Recognition</div>
+        <div class="award"><div class="an">Honor Roll</div><div class="am">Academic Excellence · 2025</div></div>
+        <div class="award"><div class="an">Academic Scholarship</div><div class="am">Awarded for Performance</div></div>
+        <div class="award"><div class="an">Excellence in Mathematics</div><div class="am">Subject Award</div></div>
+        <div class="award"><div class="an">Excellence in Islamic Studies</div><div class="am">Subject Award</div></div>
+        <div class="award"><div class="an">Debate Club</div><div class="am">Member — three consecutive years</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CHESS -->
-<section id="chess" class="chess-section">
-  <div class="section-divider">
-    <span class="section-number">03 · CHESS</span>
-    <div class="section-line"></div>
-    <span class="section-name">The Game Beneath The Game</span>
-  </div>
-  <h2 class="section-h">A <em>life</em> in 64 squares.</h2>
-  <p class="section-lede">
-    Most people play chess. I study it. Openings, middlegame structure, endgame technique — through Gotham Chess, Chess.com courses, and thousands of analyzed positions. The board is the closest thing I have to a mirror.
-  </p>
-
-  <div class="chess-grid">
-    <div class="chess-narrative">
-      <p>
-        I have played chess <strong>competitively for over a decade</strong>. Tournament wins. Top finishes. The kind of discipline that comes only from sitting at a board for hours, calculating, failing, recalibrating, and trying again.
-      </p>
-      <p>
-        But chess as a competition is downstream of chess as a way of thinking. What I have actually internalized through the game is a <strong>philosophy of patience</strong> — the willingness to forgo immediate gratification for positional advantage. The discipline to let pieces develop before launching attacks. The humility to study the masters before assuming you have anything new to offer.
-      </p>
-      <p>
-        Every business decision I'll make, every relationship I navigate, every strategic move in life — they all rhyme with positions I have seen on the board. Chess does not teach you to win. It teaches you to <strong>see the whole board</strong>, weigh trade-offs honestly, and accept that the best move is rarely the most exciting one.
-      </p>
-      <p>
-        It is the single most useful intellectual discipline I have ever practiced — and I'll practice it for the rest of my life.
-      </p>
+<!-- ============ 03 THE GAME — SCROLL CINEMA ============ -->
+<section id="cinema" aria-label="Chess — Kasparov versus Topalov 1999, scroll to replay">
+  <div class="cin-sticky">
+    <div class="cin-stage">
+      <div class="board-wrap">
+        <div class="board-frame">
+          <div id="board"></div>
+          <div class="board-files" aria-hidden="true"><span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span></div>
+          <div class="board-ranks" aria-hidden="true"><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
+        </div>
+        <div class="board-caption">
+          <span>Kasparov v. Topalov — Wijk aan Zee, 1999</span>
+          <span class="res">1–0</span>
+        </div>
+      </div>
+      <div class="cin-panel">
+        <div class="cin-eyebrow" id="cinEyebrow">03 · CHESS — THE GAME BENEATH THE GAME</div>
+        <div class="cin-move" id="cinMove">♞<span class="who">Scroll to play</span></div>
+        <h2 class="cin-title" id="cinTitle">A <em>life</em> in 64 squares.</h2>
+        <p class="cin-text" id="cinText">This is the greatest attacking game ever played. Scroll, and it unfolds move by move — because every principle I live by, I first learned on a board like this one.</p>
+        <div class="cin-tape" id="cinTape">1. e4 d6 2. d4 Nf6 3. Nc3 g6 …</div>
+      </div>
     </div>
+    <div class="cin-hint" id="cinHint">Keep scrolling — the game plays</div>
+    <div class="cin-progress"><div class="fill" id="cinFill"></div></div>
+  </div>
+</section>
 
-    <div class="chess-principles">
-      <div class="principle">
-        <span class="principle-num">i.</span>
-        <div>
-          <div class="principle-title">Play for position, not points.</div>
-          <p class="principle-text">The strongest moves often look quiet. Real advantage compounds invisibly until it becomes irreversible.</p>
-        </div>
-      </div>
-      <div class="principle">
-        <span class="principle-num">ii.</span>
-        <div>
-          <div class="principle-title">Develop before you attack.</div>
-          <p class="principle-text">Premature aggression loses to patient preparation. Build your foundation first; the opportunities will reveal themselves.</p>
-        </div>
-      </div>
-      <div class="principle">
-        <span class="principle-num">iii.</span>
-        <div>
-          <div class="principle-title">Every move costs something.</div>
-          <p class="principle-text">There are no free moves. Every choice creates new constraints — the discipline is in choosing well.</p>
-        </div>
-      </div>
-      <div class="principle">
-        <span class="principle-num">iv.</span>
-        <div>
-          <div class="principle-title">Endgame thinking from move one.</div>
-          <p class="principle-text">The opening matters because it shapes the middlegame, which shapes the endgame. Always be playing the position you're building toward.</p>
-        </div>
-      </div>
+<!-- CHESS PHOTOS + DECADE -->
+<section id="chessPhotos">
+  <div class="wrap" style="padding-top: clamp(3rem, 6vh, 5rem);">
+    <div class="chess-photo-row rev">
+      <figure class="slot wide" data-cursor="AT THE BOARD">
+        <img src="assets/chess-play.jpg" alt="Mahmod playing tournament chess" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+        <span class="slot-glyph" aria-hidden="true">♚</span>
+        <div class="slot-tag"><b>Awaiting image</b>assets/chess-play.jpg — playing at the board, landscape 16:9</div>
+        <span class="cap">Mid-calculation — tournament play</span>
+      </figure>
+      <figure class="slot tall" data-cursor="THE HARDWARE">
+        <img src="assets/chess-trophy.jpg" alt="Chess trophies" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+        <span class="slot-glyph" aria-hidden="true">♛</span>
+        <div class="slot-tag"><b>Awaiting image</b>assets/chess-trophy.jpg — trophies / board close-up, vertical 3:4</div>
+        <span class="cap">The hardware</span>
+      </figure>
+    </div>
+    <div class="decade rev">
+      <div><div class="dk">Years competing</div><div class="dv"><b>10+</b> — over a decade</div></div>
+      <div><div class="dk">Study</div><div class="dv">GothamChess <b>·</b> Chess.com courses</div></div>
+      <div><div class="dk">What it really is</div><div class="dv"><b>A mirror</b> — patient, several moves ahead</div></div>
     </div>
   </div>
 </section>
 
-<!-- PHYSICAL -->
+<!-- ============ 04 PHYSICAL ============ -->
 <section id="physical">
-  <div class="section-divider">
-    <span class="section-number">04 · PHYSICAL</span>
-    <div class="section-line"></div>
-    <span class="section-name">The Discipline of the Body</span>
-  </div>
-  <h2 class="section-h">Built, not <em>born</em>.</h2>
-  <p class="section-lede">
-    Twelve months ago I weighed 60 kilograms. Today I am 70. The bench press went from 145 pounds to 200. These are not casual numbers. They are evidence that I refuse to plateau — and that I treat the body with the same systematic seriousness I bring to the mind.
-  </p>
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">04 · PHYSICAL — 4. Be3</span><div class="rule"></div><span class="tag">The discipline of the body</span></div>
+    <h2 class="big rev">Built, not <em>born.</em></h2>
+    <p class="lede rev">Twelve months ago I weighed 60 kilograms and benched 145. The numbers below are not casual — they are <strong>evidence that I refuse to plateau</strong>, and that I treat the body with the same systematic seriousness I bring to the mind.</p>
 
-  <div class="physical-grid">
-    <div class="stat-block">
-      <div class="stat-block-meta">— Body Mass</div>
-      <div class="stat-block-value">70<span class="unit">kg</span><span class="delta">+10 kg / 12 months</span></div>
-      <p class="stat-block-desc">Lean mass added through structured training and disciplined nutrition.</p>
-    </div>
-    <div class="stat-block">
-      <div class="stat-block-meta">— Bench Press</div>
-      <div class="stat-block-value">200<span class="unit">lb</span><span class="delta">+55 lb · 38% gain</span></div>
-      <p class="stat-block-desc">Progressive overload across a year of programmed training cycles.</p>
-    </div>
-    <div class="stat-block">
-      <div class="stat-block-meta">— Discipline Streak</div>
-      <div class="stat-block-value">12<span class="unit">mo</span><span class="delta">No extended breaks</span></div>
-      <p class="stat-block-desc">Twelve months of consistent training, programmed and tracked.</p>
-    </div>
-  </div>
-
-  <div class="physical-narrative">
-    <div>
-      <h3>Football — the lifelong sport.</h3>
-      <p>
-        Football has been a constant since I was a child. I have played at every level available to me and have been outstanding at each one. It is where I learned how teams function under pressure, how leadership is earned through performance, and how to compete without losing composure.
-      </p>
-      <p>
-        The lessons from team sport — communication, accountability, performance under fatigue — carry into every other area of my life.
-      </p>
-    </div>
-    <div>
-      <h3>The gym — proof of system.</h3>
-      <p>
-        Anyone can train for a week. Almost no one trains consistently for a year. The gym is the most honest mirror I have — it tells you exactly how disciplined you have been, with no possibility of self-deception.
-      </p>
-      <p>
-        I bring that same standard to everything else. If I cannot trust myself with the body, I cannot trust myself with anything more abstract.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="experience">
-  <div class="section-divider">
-    <span class="section-number">05 · EXPERIENCE</span>
-    <div class="section-line"></div>
-    <span class="section-name">Formative Encounters</span>
-  </div>
-  <h2 class="section-h">The <em>real</em> classroom.</h2>
-  <p class="section-lede">
-    Two experiences outside the academic frame have shaped me more than any course. One taught me discipline; the other taught me how a business actually functions beneath the surface.
-  </p>
-
-  <div class="timeline">
-    <div class="tl-entry">
-      <div class="tl-date">2019 — 2020 · Mississauga, ON</div>
-      <div class="tl-title">Canadian Army Cadet</div>
-      <div class="tl-org">Royal Canadian Army Cadet Corps</div>
-      <div class="tl-desc">
-        Immersed in an environment built on discipline, structure, and leadership. The program demanded punctuality, physical fitness, teamwork, and the ability to both follow and give direction. I learned how high-performing teams operate under pressure — and that leadership is earned through consistency and reliability, never granted by title.
+    <div class="stats-row rev">
+      <div class="stat">
+        <div class="sk">— Body mass</div>
+        <div class="sv"><span data-count="70" data-from="60">60</span><span class="unit">kg</span></div>
+        <div class="sd">+10 kg / 12 months</div>
+        <p class="sp">Lean mass added through structured training and disciplined nutrition.</p>
+      </div>
+      <div class="stat">
+        <div class="sk">— Bench press</div>
+        <div class="sv"><span data-count="200" data-from="145">145</span><span class="unit">lb</span></div>
+        <div class="sd">+55 lb · 38% gain</div>
+        <p class="sp">Progressive overload across a year of programmed training cycles.</p>
+      </div>
+      <div class="stat">
+        <div class="sk">— Discipline streak</div>
+        <div class="sv"><span data-count="12" data-from="0">0</span><span class="unit">mo</span></div>
+        <div class="sd">No extended breaks</div>
+        <p class="sp">Twelve months of consistent training, programmed and tracked.</p>
       </div>
     </div>
 
-    <div class="tl-entry">
-      <div class="tl-date">2024 · Dubai, UAE</div>
-      <div class="tl-title">Operations Management — Shadow</div>
-      <div class="tl-org">Restaurant Industry · Thai Concept</div>
-      <div class="tl-desc">
-        Shadowed an Operations Manager and observed firsthand how a business functions at ground level. Exposure to staff coordination, inventory and supply chain management, customer experience, and daily decision-making. What struck me most was how many moving parts had to align simultaneously — and how the best operators made it look seamless through anticipation rather than reaction.
+    <div class="ba-grid rev">
+      <div class="ba" id="baSlider" data-cursor="DRAG">
+        <div class="pane before">
+          <figure class="slot">
+            <img src="assets/gym-before.jpg" alt="Training photo, twelve months ago" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+            <span class="slot-glyph" aria-hidden="true">♙</span>
+            <div class="slot-tag"><b>Awaiting image</b>assets/gym-before.jpg — 12 months ago, vertical 4:5</div>
+          </figure>
+        </div>
+        <div class="pane after">
+          <figure class="slot">
+            <img src="assets/gym-after.jpg" alt="Training photo, now" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+            <span class="slot-glyph" aria-hidden="true">♕</span>
+            <div class="slot-tag"><b>Awaiting image</b>assets/gym-after.jpg — now, vertical 4:5 (same framing)</div>
+          </figure>
+        </div>
+        <span class="chip l">Month 0 · 60kg</span>
+        <span class="chip r">Month 12 · 70kg</span>
+        <div class="divider"></div>
+        <div class="handle">↔</div>
+        <input type="range" min="0" max="100" value="50" aria-label="Compare before and after training photos">
+      </div>
+      <div class="ba-copy">
+        <h3>The most honest mirror I own.</h3>
+        <p>Anyone can train for a week. Almost no one trains consistently for a year. The gym tells you exactly how disciplined you have been — with no possibility of self-deception.</p>
+        <p>I bring that same standard to everything else. If I cannot trust myself with the body, I cannot trust myself with anything more abstract.</p>
+        <p style="font-family:var(--mono); font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--rust);">← Drag the divider —</p>
       </div>
     </div>
 
-    <div class="tl-entry">
-      <div class="tl-date">Ongoing</div>
-      <div class="tl-title">Self-Directed Builder</div>
-      <div class="tl-org">Personal — Independent Study & Projects</div>
-      <div class="tl-desc">
-        Outside of formal credentials, I have built a habit of deep self-directed work. Reading widely across finance and strategy. Writing structured analyses (including a 22-page personal breakdown of <em>The 48 Laws of Power</em>). Maintaining structured fitness programming. Studying chess at a higher level than required. This is the work no one assigns — which is exactly why it matters most.
+    <div class="phys-cols rev">
+      <div>
+        <h3>Football — the lifelong sport.</h3>
+        <p>Football has been a constant since I was a child. I have played at every level available to me and have been outstanding at each one. It is where I learned how teams function under pressure, how leadership is earned through performance, and how to compete without losing composure.</p>
+        <figure class="slot" data-cursor="THE PITCH">
+          <img src="assets/football.jpg" alt="Playing football" onload="this.parentElement.classList.add('filled')" onerror="this.remove()">
+          <span class="slot-glyph" aria-hidden="true">⚽</span>
+          <div class="slot-tag"><b>Awaiting image</b>assets/football.jpg — on the pitch, landscape 16:10</div>
+          <span class="cap">The lifelong sport</span>
+        </figure>
+      </div>
+      <div>
+        <h3>Team lessons, carried everywhere.</h3>
+        <p>Communication, accountability, performance under fatigue — the lessons from team sport carry into every other area of my life.</p>
+        <p>Chess taught me to think alone. Football taught me to perform together. The gym taught me that both are worthless without consistency. Three arenas, one operating system.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LIBRARY -->
+<!-- MARQUEE 2 -->
+<div class="marquee rtl" aria-hidden="true">
+  <div class="track">
+    <span><i>60 → 70 kg</i> <b>·</b> 145 → 200 lb <b>·</b> <i>Twelve months</i> <b>·</b> Zero excuses <b>·</b> </span>
+    <span><i>60 → 70 kg</i> <b>·</b> 145 → 200 lb <b>·</b> <i>Twelve months</i> <b>·</b> Zero excuses <b>·</b> </span>
+  </div>
+</div>
+
+<!-- ============ 05 EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">05 · EXPERIENCE — 5. Qd2</span><div class="rule"></div><span class="tag">Formative encounters</span></div>
+    <h2 class="big rev">The <em>real</em> classroom.</h2>
+    <p class="lede rev">Two experiences outside the academic frame shaped me more than any course. One taught me discipline; the other taught me how a business actually functions beneath the surface.</p>
+
+    <div class="timeline" id="timeline">
+      <div class="rail"><div class="fill" id="railFill"></div></div>
+      <div class="tl rev">
+        <div class="td">2019 — 2020 · Mississauga, ON</div>
+        <div class="tt">Canadian Army Cadet</div>
+        <div class="to">Royal Canadian Army Cadet Corps</div>
+        <p class="tx">Immersed in an environment built on discipline, structure, and leadership. The program demanded punctuality, physical fitness, teamwork, and the ability to both follow and give direction. I learned how high-performing teams operate under pressure — and that <em>leadership is earned through consistency and reliability, never granted by title.</em></p>
+      </div>
+      <div class="tl rev">
+        <div class="td">2024 · Dubai, UAE</div>
+        <div class="tt">Operations Management — Shadow</div>
+        <div class="to">Restaurant Industry · Thai Concept</div>
+        <p class="tx">Shadowed an Operations Manager and observed firsthand how a business functions at ground level — staff coordination, inventory and supply chain, customer experience, daily decision-making. What struck me most was how many moving parts had to align simultaneously, and how the best operators made it look seamless <em>through anticipation rather than reaction.</em></p>
+      </div>
+      <div class="tl rev">
+        <div class="td">Ongoing</div>
+        <div class="tt">Self-Directed Builder</div>
+        <div class="to">Independent Study &amp; Projects</div>
+        <p class="tx">Outside of formal credentials: reading widely across finance and strategy, writing structured analyses (including a 22-page personal breakdown of <em>The 48 Laws of Power</em>), maintaining structured fitness programming, studying chess at a higher level than required. This is the work no one assigns — <em>which is exactly why it matters most.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 LIBRARY (horizontal) ============ -->
 <section id="library">
-  <div class="section-divider">
-    <span class="section-number">06 · LIBRARY</span>
-    <div class="section-line"></div>
-    <span class="section-name">The Books That Built Me</span>
-  </div>
-  <h2 class="section-h">What I'm <em>reading</em>.</h2>
-  <p class="section-lede">
-    I read to stress-test ideas, not to collect them. These are the books I have wrestled with and the ones that have actually changed how I see the world.
-  </p>
-
-  <div class="library-grid">
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Finance</span>
-        <span class="book-num">№ 01</span>
-      </div>
-      <div class="book-title">Rich Dad, Poor Dad</div>
-      <div class="book-author">— Robert Kiyosaki</div>
-      <p class="book-takeaway">Formative. Reframed how I think about wealth — the distinction between working for money and making money work for you became foundational.</p>
+  <div class="lib-sticky">
+    <div class="lib-head">
+      <div class="eyebrow" style="margin-bottom:1.8rem;"><span class="num">06 · LIBRARY — 6. f3</span><div class="rule"></div><span class="tag">The books that built me — scroll sideways</span></div>
+      <h2 class="big" style="margin-bottom:0;">What I'm <em>reading.</em></h2>
     </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Strategy</span>
-        <span class="book-num">№ 02</span>
-      </div>
-      <div class="book-title">The 48 Laws of Power</div>
-      <div class="book-author">— Robert Greene</div>
-      <p class="book-takeaway">I wrote a 22-page analytical breakdown of the first sixteen laws. Not because anyone asked. Because I needed to stress-test each principle against my own logic.</p>
+    <div class="lib-track" id="libTrack">
+      <div class="bk" data-cursor="№ 01"><span class="bnum">01</span><div class="bcat">— Finance</div><div class="bt">Rich Dad, Poor Dad</div><div class="ba2">Robert Kiyosaki</div><p class="bx">Formative. Reframed how I think about wealth — the distinction between working for money and making money work for you became foundational.</p></div>
+      <div class="bk" data-cursor="№ 02"><span class="bnum">02</span><div class="bcat">— Strategy</div><div class="bt">The 48 Laws of Power</div><div class="ba2">Robert Greene</div><p class="bx">I wrote a 22-page analytical breakdown of the first sixteen laws. Not because anyone asked — because I needed to stress-test each principle against my own logic.</p></div>
+      <div class="bk" data-cursor="№ 03"><span class="bnum">03</span><div class="bcat">— History</div><div class="bt">Sapiens</div><div class="ba2">Yuval Noah Harari</div><p class="bx">Shared fiction — money, nations, rights — is what built civilization. Every founder is in the business of writing new stories.</p></div>
+      <div class="bk" data-cursor="№ 04"><span class="bnum">04</span><div class="bcat">— Habits</div><div class="bt">Atomic Habits</div><div class="ba2">James Clear</div><p class="bx">The clearest case I have read for systems over goals. My fitness, study, and prayer routines all owe something to this book.</p></div>
+      <div class="bk" data-cursor="№ 05"><span class="bnum">05</span><div class="bcat">— Strategy</div><div class="bt">The Art of War</div><div class="ba2">Sun Tzu</div><p class="bx">Strategy distilled to its essence. The lessons translate seamlessly from war to chess to business — which is precisely the point.</p></div>
+      <div class="bk" data-cursor="№ 06"><span class="bnum">06</span><div class="bcat">— Faith</div><div class="bt">The Clear Quran</div><div class="ba2">Tr. Dr. Mustafa Khattab</div><p class="bx">The anchor beneath everything else. The framework against which I measure ambition, discipline, and what success actually means.</p></div>
+      <div class="bk" data-cursor="№ 07"><span class="bnum">07</span><div class="bcat">— Purpose</div><div class="bt">Ikigai</div><div class="ba2">García &amp; Miralles</div><p class="bx">Reframes "career" as the intersection of love, skill, mission, and value. A useful corrective to thinking of work as transactional.</p></div>
+      <div class="bk" data-cursor="№ 08"><span class="bnum">08</span><div class="bcat">— Science</div><div class="bt">Veritasium · Long-Form</div><div class="ba2">Derek Muller</div><p class="bx">Not a book — a consistent intellectual companion. Proof that complex ideas can be made beautiful without being dumbed down.</p></div>
+      <div class="bk" data-cursor="№ 09"><span class="bnum">09</span><div class="bcat">— Strategy</div><div class="bt">Chess Mastery Series</div><div class="ba2">GothamChess &amp; Chess.com</div><p class="bx">Structured study of openings, middlegame, and endgame technique. The closest thing I have to formal training in the discipline I love most.</p></div>
+      <div class="bk feat" data-cursor="THE OPUS"><span class="bnum">✦</span><div class="bcat">— Personal manuscript · 2024</div><div class="bt">The 48 Laws — a strategic reread.</div><div class="ba2">by M. Hammouda</div><p class="bx">A 22-page breakdown of the first sixteen laws — written for no audience, no grade, no assignment. Each principle examined for its underlying logic, stress-tested against real-world examples, re-articulated in my own words.</p><span class="pages">22 pages · Unpublished</span></div>
     </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— History</span>
-        <span class="book-num">№ 03</span>
-      </div>
-      <div class="book-title">Sapiens</div>
-      <div class="book-author">— Yuval Noah Harari</div>
-      <p class="book-takeaway">A reminder that shared fiction — money, nations, rights — is what built civilization. Every founder is in the business of writing new stories.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Habits</span>
-        <span class="book-num">№ 04</span>
-      </div>
-      <div class="book-title">Atomic Habits</div>
-      <div class="book-author">— James Clear</div>
-      <p class="book-takeaway">The clearest case I have read for systems over goals. My fitness, study, and prayer routines all owe something to this book.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Strategy</span>
-        <span class="book-num">№ 05</span>
-      </div>
-      <div class="book-title">The Art of War</div>
-      <div class="book-author">— Sun Tzu</div>
-      <p class="book-takeaway">Strategy distilled to its essence. The lessons translate seamlessly from war to chess to business — which is precisely the point.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Faith</span>
-        <span class="book-num">№ 06</span>
-      </div>
-      <div class="book-title">The Clear Quran</div>
-      <div class="book-author">— Translation by Dr. Mustafa Khattab</div>
-      <p class="book-takeaway">The anchor beneath everything else. Provides the framework against which I measure ambition, discipline, and what success actually means.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Purpose</span>
-        <span class="book-num">№ 07</span>
-      </div>
-      <div class="book-title">Ikigai</div>
-      <div class="book-author">— Héctor García & Francesc Miralles</div>
-      <p class="book-takeaway">Reframes "career" as the intersection of love, skill, mission, and value. A useful corrective to thinking of work as transactional.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Science</span>
-        <span class="book-num">№ 08</span>
-      </div>
-      <div class="book-title">Veritasium · Long-Form</div>
-      <div class="book-author">— Derek Muller</div>
-      <p class="book-takeaway">Not a book — a consistent intellectual companion. The clearest demonstration that complex ideas can be made beautiful without being dumbed down.</p>
-    </div>
-    <div class="book">
-      <div class="book-meta">
-        <span class="book-cat">— Strategy</span>
-        <span class="book-num">№ 09</span>
-      </div>
-      <div class="book-title">Chess Mastery Series</div>
-      <div class="book-author">— GothamChess & Chess.com</div>
-      <p class="book-takeaway">Structured study of openings, middlegame, and endgame technique. The closest thing I have to formal training in the discipline I love most.</p>
-    </div>
-  </div>
-
-  <div class="featured-essay">
-    <div>
-      <div class="essay-meta">— Personal Manuscript · 2024</div>
-      <h3 class="essay-title">The <em>48 Laws</em> — a strategic reread.</h3>
-    </div>
-    <div>
-      <p class="essay-desc">
-        A 22-page personal breakdown of the first sixteen laws from Robert Greene's <em>48 Laws of Power</em> — written for no audience, no grade, no assignment. Each principle examined for its underlying logic, stress-tested against real-world examples, and re-articulated in my own words.
-      </p>
-      <span class="essay-pages">22 PAGES · UNPUBLISHED</span>
-    </div>
+    <div class="lib-bar"><div class="fill" id="libFill"></div></div>
   </div>
 </section>
 
-<!-- AMBITION / UNIVERSITY -->
+<!-- ============ 07 AMBITION ============ -->
 <section id="ambition">
-  <div class="section-divider">
-    <span class="section-number">07 · AMBITION</span>
-    <div class="section-line"></div>
-    <span class="section-name">Where I'm Going</span>
-  </div>
-  <h2 class="section-h">The next <em>five</em> moves.</h2>
-  <p class="section-lede">
-    University is one deliberate step in a much longer plan. Four Canadian institutions, each chosen for a specific reason. Beyond the degree lies the actual work — entry, mastery, transition, ownership.
-  </p>
+  <canvas id="stars"></canvas>
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">07 · AMBITION — 7. Nge2</span><div class="rule"></div><span class="tag">Where I'm going</span></div>
+    <h2 class="big rev">The next <em>five</em> moves.</h2>
+    <p class="lede rev">University is one deliberate step in a much longer plan. Four Canadian institutions, each chosen for a specific reason. Beyond the degree lies the actual work — <strong>entry, mastery, transition, ownership.</strong></p>
 
-  <div class="universities">
-    <div class="uni">
-      <div class="uni-rank">— Choice № 01</div>
-      <div class="uni-name">University of <em>Toronto</em></div>
-      <div class="uni-loc">Toronto · Ontario</div>
-      <p class="uni-why">World-class engineering programs alongside the Rotman School of Management — the bridge between technical and business thinking.</p>
+    <div class="unis rev">
+      <div class="uni" data-i="01"><div class="ur">— Choice № 01</div><div class="un">University of <em>Toronto</em></div><div class="ul">Toronto · Ontario</div><p class="uw">World-class engineering alongside the Rotman School of Management — the bridge between technical and business thinking.</p></div>
+      <div class="uni" data-i="02"><div class="ur">— Choice № 02</div><div class="un">University of <em>Waterloo</em></div><div class="ul">Waterloo · Ontario</div><p class="uw">The co-op program offers invaluable industry experience while studying — practical exposure at scale.</p></div>
+      <div class="uni" data-i="03"><div class="ur">— Choice № 03</div><div class="un"><em>McGill</em> University</div><div class="ul">Montréal · Québec</div><p class="uw">Academic excellence in a city that lets me deepen French into genuine bilingual fluency.</p></div>
+      <div class="uni" data-i="04"><div class="ur">— Choice № 04</div><div class="un">University of <em>British Columbia</em></div><div class="ul">Vancouver · BC</div><p class="uw">Outstanding academics in an environment that fosters both focus and perspective.</p></div>
     </div>
-    <div class="uni">
-      <div class="uni-rank">— Choice № 02</div>
-      <div class="uni-name">University of <em>Waterloo</em></div>
-      <div class="uni-loc">Waterloo · Ontario</div>
-      <p class="uni-why">The co-op program offers invaluable industry experience while studying — practical exposure at scale.</p>
-    </div>
-    <div class="uni">
-      <div class="uni-rank">— Choice № 03</div>
-      <div class="uni-name"><em>McGill</em> University</div>
-      <div class="uni-loc">Montréal · Québec</div>
-      <p class="uni-why">Academic excellence in a city that lets me deepen French into genuine bilingual fluency.</p>
-    </div>
-    <div class="uni">
-      <div class="uni-rank">— Choice № 04</div>
-      <div class="uni-name">University of <em>British Columbia</em></div>
-      <div class="uni-loc">Vancouver · BC</div>
-      <p class="uni-why">Outstanding academics in an environment that fosters both focus and perspective.</p>
-    </div>
-  </div>
 
-  <div class="career-roadmap">
-    <div class="phase">
-      <div class="phase-num">— Phase 01</div>
-      <div class="phase-title">Foundation</div>
-      <p class="phase-desc">Enter a reputable corporation in engineering or finance. Master the craft. Understand the industry from inside the system. Build technical and financial literacy at depth.</p>
+    <div class="roadmap rev">
+      <svg class="link" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 10"><path d="M 0 5 H 100" vector-effect="non-scaling-stroke"/></svg>
+      <div class="phase"><span class="ph-dot"></span><div class="ph-n">— Phase 01</div><div class="ph-t">Foundation</div><p class="ph-x">Enter a reputable corporation in engineering or finance. Master the craft. Understand the industry from inside the system. Build technical and financial literacy at depth.</p></div>
+      <div class="phase"><span class="ph-dot"></span><div class="ph-n">— Phase 02</div><div class="ph-t">Capital &amp; Network</div><p class="ph-x">Accumulate assets through disciplined saving and investment. Develop the relationships that will matter later. Identify gaps and unmet needs from the inside.</p></div>
+      <div class="phase"><span class="ph-dot"></span><div class="ph-n">— Phase 03</div><div class="ph-t">Ownership</div><p class="ph-x">Build the company. Infrastructure. Technology. Finance. Real estate. Whatever the gap demands — but on my own terms, with my own thesis, with my own team.</p></div>
     </div>
-    <div class="phase">
-      <div class="phase-num">— Phase 02</div>
-      <div class="phase-title">Capital & Network</div>
-      <p class="phase-desc">Accumulate assets through disciplined saving and investment. Develop the relationships that will matter later. Identify gaps and unmet needs from the inside.</p>
-    </div>
-    <div class="phase">
-      <div class="phase-num">— Phase 03</div>
-      <div class="phase-title">Ownership</div>
-      <p class="phase-desc">Build the company. Infrastructure. Technology. Finance. Real estate. Whatever the gap demands — but on my own terms, with my own thesis, with my own team.</p>
+
+    <div class="dream rev">
+      <div class="dt">Dream destination:<br><em>SpaceX.</em></div>
+      <p class="dx">Not for the brand — for the proof it represents: that a determined team can reset the boundaries of what is considered possible. That is the standard I hold my own ambitions to.</p>
     </div>
   </div>
 </section>
 
-<!-- WRITING -->
-<section id="writing" class="writing">
-  <div class="section-divider">
-    <span class="section-number">08 · WRITING</span>
-    <div class="section-line"></div>
-    <span class="section-name">Public Thinking</span>
-  </div>
-  <h2 class="section-h">Out <em>loud</em>.</h2>
-  <p class="section-lede">
-    Essays, breakdowns, and frameworks — published as I think them through. Not polished content. Actual thinking, in public.
-  </p>
+<!-- ============ 08 WRITING ============ -->
+<section id="writing">
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">08 · WRITING — 8. Bh6</span><div class="rule"></div><span class="tag">Public thinking</span></div>
+    <h2 class="big rev">Out <em>loud.</em></h2>
+    <p class="lede rev">Essays, breakdowns, and frameworks — published as I think them through. Not polished content. <strong>Actual thinking, in public.</strong></p>
 
-  <div class="writing-index">
-    <div class="post">
-      <span class="post-num">№ 01</span>
-      <div>
-        <div class="post-title">The <em>48 Laws</em> — a strategic reread for the modern builder</div>
+    <div class="rev">
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 01</span>
+        <div class="pt2">The <em>48 Laws</em> — a strategic reread for the modern builder</div>
+        <div class="px2">Sixteen laws, stress-tested. Where Greene was right, where he was lazy, and what survives.</div>
+        <span class="ps2 live">In progress</span>
       </div>
-      <div class="post-summary">Sixteen laws, stress-tested. Where Greene was right, where he was lazy, and what survives translation to the present.</div>
-      <span class="post-status">— In progress</span>
-    </div>
-    <div class="post">
-      <span class="post-num">№ 02</span>
-      <div>
-        <div class="post-title">What <em>chess</em> taught me about decisions under pressure</div>
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 02</span>
+        <div class="pt2">What <em>chess</em> taught me about decisions under pressure</div>
+        <div class="px2">The mental habits formed at the board — and where they hold up off it.</div>
+        <span class="ps2">Drafting</span>
       </div>
-      <div class="post-summary">The mental habits formed at the board — and where they hold up off it.</div>
-      <span class="post-status">— Drafting</span>
-    </div>
-    <div class="post">
-      <span class="post-num">№ 03</span>
-      <div>
-        <div class="post-title">Why <em>engineering</em> before <em>finance</em> — and how they connect</div>
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 03</span>
+        <div class="pt2">Why <em>engineering</em> before <em>finance</em> — and how they connect</div>
+        <div class="px2">The case for technical understanding before financial sophistication.</div>
+        <span class="ps2">Planned</span>
       </div>
-      <div class="post-summary">The case for building technical understanding before financial sophistication, and the long compounding it creates.</div>
-      <span class="post-status">— Planned</span>
-    </div>
-    <div class="post">
-      <span class="post-num">№ 04</span>
-      <div>
-        <div class="post-title">Mississauga to <em>Dubai</em>: what losing everything taught me about identity</div>
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 04</span>
+        <div class="pt2">Mississauga to <em>Dubai</em>: what losing everything taught me about identity</div>
+        <div class="px2">On relocation, rebuilding, and the strange freedom of being unknown.</div>
+        <span class="ps2">Planned</span>
       </div>
-      <div class="post-summary">A personal essay on relocation, rebuilding, and the strange freedom of being unknown.</div>
-      <span class="post-status">— Planned</span>
-    </div>
-    <div class="post">
-      <span class="post-num">№ 05</span>
-      <div>
-        <div class="post-title"><em>SpaceX</em> as a framework — thinking about ambition at scale</div>
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 05</span>
+        <div class="pt2"><em>SpaceX</em> as a framework — thinking about ambition at scale</div>
+        <div class="px2">What it means to build something that resets the boundaries of the possible.</div>
+        <span class="ps2">Planned</span>
       </div>
-      <div class="post-summary">What it actually means to build something that resets the boundaries of what is considered possible.</div>
-      <span class="post-status">— Planned</span>
-    </div>
-    <div class="post">
-      <span class="post-num">№ 06</span>
-      <div>
-        <div class="post-title">The case for <em>faith</em> — purpose as infrastructure</div>
+      <div class="post" data-cursor="SOON">
+        <span class="pn2">№ 06</span>
+        <div class="pt2">The case for <em>faith</em> — purpose as infrastructure</div>
+        <div class="px2">Why religious grounding is competitive advantage, not constraint.</div>
+        <span class="ps2">Planned</span>
       </div>
-      <div class="post-summary">Why religious grounding is competitive advantage, not constraint, for someone trying to build for the long term.</div>
-      <span class="post-status">— Planned</span>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="contact">
-  <div class="section-divider">
-    <span class="section-number">09 · CONTACT</span>
-    <div class="section-line"></div>
-    <span class="section-name">Begin a Conversation</span>
-  </div>
-  <div class="contact-grid">
-    <div>
-      <h2 class="contact-h">Find <em>me</em>.</h2>
-      <p class="contact-text">
-        I'm open to conversations with people who think seriously — about engineering, finance, chess, faith, ambition, or anything that intersects them. Mentors, founders, students, peers — if our paths align, reach out.
-      </p>
-    </div>
-    <div class="contact-rows">
-      <a href="mailto:mahmod.h1@gemsisak.com" class="contact-row">
-        <span class="contact-row-label">— Email</span>
-        <span class="contact-row-val">mahmod.h1@gemsisak.com</span>
-      </a>
-      <a href="#" class="contact-row">
-        <span class="contact-row-label">— LinkedIn</span>
-        <span class="contact-row-val">linkedin.com/in/mahmod-hammouda</span>
-      </a>
-      <a href="#" class="contact-row">
-        <span class="contact-row-label">— Chess.com</span>
-        <span class="contact-row-val">@mahmod</span>
-      </a>
-      <div class="contact-row">
-        <span class="contact-row-label">— Based</span>
-        <span class="contact-row-val">Dubai, UAE</span>
+<!-- ============ 09 CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow rev"><span class="num">09 · CONTACT — 9. Qxh6</span><div class="rule"></div><span class="tag">Begin a conversation</span></div>
+    <div class="contact-grid">
+      <div class="rev">
+        <h2 class="contact-h">Your <em>move.</em></h2>
+        <p class="contact-x">I'm open to conversations with people who think seriously — about engineering, finance, chess, faith, ambition, or anything that intersects them. Mentors, founders, students, peers — if our paths align, reach out.</p>
+        <a class="cta" href="mailto:mahmod.h1@gemsisak.com" data-magnet data-cursor="SAY SALAM">Start the conversation <span class="arr">→</span></a>
       </div>
-      <div class="contact-row">
-        <span class="contact-row-label">— Next</span>
-        <span class="contact-row-val">Canada · 2026</span>
+      <div class="c-rows rev" style="--d:0.15s">
+        <a class="c-row" href="mailto:mahmod.h1@gemsisak.com" data-cursor="EMAIL"><span class="ck">— Email</span><span class="cv">mahmod.h1@gemsisak.com</span></a>
+        <a class="c-row" href="https://linkedin.com/in/mahmod-hammouda" target="_blank" rel="noopener" data-cursor="CONNECT"><span class="ck">— LinkedIn</span><span class="cv">in/mahmod-hammouda</span></a>
+        <a class="c-row" href="https://www.chess.com" target="_blank" rel="noopener" data-cursor="1. e4?"><span class="ck">— Chess.com</span><span class="cv">@mahmod</span></a>
+        <div class="c-row"><span class="ck">— Based</span><span class="cv">Dubai, UAE</span></div>
+        <div class="c-row"><span class="ck">— Next</span><span class="cv">Canada · 2026</span></div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="marquee end-marquee" aria-hidden="true">
+  <div class="track">
+    <span><i>Several moves ahead</i> <b>·</b> Several moves ahead <b>·</b> </span>
+    <span><i>Several moves ahead</i> <b>·</b> Several moves ahead <b>·</b> </span>
+  </div>
+</div>
 
 <footer>
-  <span>© 2026 · M. Hammouda · Archive</span>
-  <span class="center"><em>Strategic. Deliberate. Influential. Visionary.</em></span>
-  <span class="right">Vol. 01 · Dubai Edition</span>
+  <span>© 2026 · M. Hammouda</span>
+  <em>Strategic. Deliberate. Influential. Visionary.</em>
+  <span>Vol. 02 · Dubai Edition · 1–0</span>
 </footer>
 
+</main>
+
 <script>
-  // Custom cursor
-  const cursor = document.querySelector('.cursor');
-  const ring = document.querySelector('.cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+(function () {
+'use strict';
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  if (window.innerWidth > 640) {
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-    });
+/* ---------- LOADER ---------- */
+const loader = document.getElementById('loader');
+const loadCount = document.getElementById('loadCount');
+function finishLoad() {
+  loader.classList.add('done');
+  document.body.classList.add('loaded');
+  setTimeout(() => loader.remove(), 1100);
+}
+if (reduced) { finishLoad(); }
+else {
+  let n = 0;
+  const t = setInterval(() => {
+    n = Math.min(100, n + Math.ceil(Math.random() * 11));
+    loadCount.textContent = String(n).padStart(2, '0');
+    if (n >= 100) { clearInterval(t); setTimeout(finishLoad, 180); }
+  }, 52);
+  setTimeout(finishLoad, 2600); // hard cap
+}
 
-    function loop() {
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(loop);
-    }
-    loop();
+/* ---------- CURSOR ---------- */
+const fine = window.matchMedia('(pointer: fine)').matches;
+const cur = document.getElementById('cur');
+const ring = document.getElementById('curRing');
+const ringLbl = ring.querySelector('.lbl');
+if (fine && !reduced) {
+  let mx = -40, my = -40, rx = -40, ry = -40;
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+  }, { passive: true });
+  (function ringLoop() {
+    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(ringLoop);
+  })();
+  document.addEventListener('mouseover', e => {
+    const t = e.target.closest('[data-cursor]');
+    const link = e.target.closest('a, button, input, .course, .post, .award');
+    if (t) { ringLbl.textContent = t.dataset.cursor; ring.classList.add('on'); ring.classList.remove('tap'); }
+    else if (link) { ring.classList.add('tap'); ring.classList.remove('on'); }
+    else { ring.classList.remove('on', 'tap'); }
+  });
+}
 
-    document.querySelectorAll('a, .book, .course, .post, .stat-block, .uni, .phase').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
+/* ---------- NAV / MENU / PROGRESS ---------- */
+const nav = document.getElementById('nav');
+const bar = document.getElementById('bar');
+const menu = document.getElementById('menu');
+document.getElementById('menuBtn').addEventListener('click', () => {
+  menu.classList.add('open'); menu.setAttribute('aria-hidden', 'false');
+});
+document.getElementById('menuClose').addEventListener('click', closeMenu);
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+function closeMenu() { menu.classList.remove('open'); menu.setAttribute('aria-hidden', 'true'); }
+addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+/* ---------- REVEALS ---------- */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+/* ---------- COUNT-UP STATS ---------- */
+const cio = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, to = +el.dataset.count, from = +el.dataset.from || 0;
+    const t0 = performance.now(), dur = 1600;
+    (function step(t) {
+      const p = clamp((t - t0) / dur, 0, 1);
+      const ease = 1 - Math.pow(1 - p, 4);
+      el.textContent = Math.round(from + (to - from) * ease);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+    cio.unobserve(el);
+  });
+}, { threshold: 0.6 });
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+/* ---------- CHESS: Kasparov v. Topalov, Wijk aan Zee 1999 ---------- */
+const MOVES = ["e2e4","d7d6","d2d4","g8f6","b1c3","g7g6","c1e3","f8g7","d1d2","c7c6","f2f3","b7b5","g1e2","b8d7","e3h6","g7h6","d2h6","c8b7","a2a3","e7e5","e1c1","d8e7","c1b1","a7a6","e2c1","e8c8","c1b3","e5d4","d1d4","c6c5","d4d1","d7b6","g2g3","c8b8","b3a5","b7a8","f1h3","d6d5","h6f4","b8a7","h1e1","d5d4","c3d5","b6d5","e4d5","e7d6","d1d4","c5d4","e1e7","a7b6","f4d4","b6a5","b2b4","a5a4","d4c3","d6d5","e7a7","a8b7","a7b7","d5c4","c3f6","a4a3","f6a6","a3b4","c2c3","b4c3","a6a1","c3d2","a1b2","d2d1","h3f1","d8d2","b7d7","d2d7","f1c4","b5c4","b2h8","d7d3","h8a8","c4c3","a8a4","d1e1","f3f4","f7f5","b1c1","d3d2","a4a7"];
+const SAN = ["e4","d6","d4","Nf6","Nc3","g6","Be3","Bg7","Qd2","c6","f3","b5","Nge2","Nbd7","Bh6","Bxh6","Qxh6","Bb7","a3","e5","O-O-O","Qe7","Kb1","a6","N2c1","O-O-O","Nb3","exd4","Rxd4","c5","Rd1","Nb6","g3","Kb8","Na5","Ba8","Bh3","d5","Qf4+","Ka7","Rhe1","d4","Nd5","Nbxd5","exd5","Qd6","Rxd4!","cxd4","Re7+!!","Kb6","Qxd4+","Kxa5","b4+","Ka4","Qc3","Qxd5","Ra7","Bb7","Rxb7","Qc4","Qxf6","Kxa3","Qxa6+","Kxb4","c3+","Kxc3","Qa1+","Kd2","Qb2+","Kd1","Bf1","Rd2","Rd7","Rxd7","Bxc4","bxc4","Qxh8","Rd3","Qa8","c3","Qa4+","Ke1","f4","f5","Kc1","Rd2","Qa7"];
+const GLYPH = { wK:'♔', wQ:'♕', wR:'♖', wB:'♗', wN:'♘', wP:'♙', bK:'♚', bQ:'♛', bR:'♜', bB:'♝', bN:'♞', bP:'♟' };
+
+// precompute board states (index 0 = start, index i = after ply i)
+const STATES = [], LAST = [null];
+(function build() {
+  const b = {};
+  const back = ['R','N','B','Q','K','B','N','R'];
+  'abcdefgh'.split('').forEach((f, i) => {
+    b[f+'1'] = 'w'+back[i]; b[f+'2'] = 'wP'; b[f+'7'] = 'bP'; b[f+'8'] = 'b'+back[i];
+  });
+  STATES.push(Object.assign({}, b));
+  MOVES.forEach(mv => {
+    const from = mv.slice(0,2), to = mv.slice(2,4), pc = b[from];
+    delete b[from]; b[to] = pc;
+    if (pc[1] === 'K' && from === 'e1' && to === 'c1') { b['d1'] = b['a1']; delete b['a1']; }
+    if (pc[1] === 'K' && from === 'e8' && to === 'c8') { b['d8'] = b['a8']; delete b['a8']; }
+    STATES.push(Object.assign({}, b));
+    LAST.push([from, to]);
+  });
+})();
+
+// build DOM board
+const boardEl = document.getElementById('board');
+const sqEls = {};
+for (let r = 8; r >= 1; r--) for (let f = 0; f < 8; f++) {
+  const sq = 'abcdefgh'[f] + r;
+  const d = document.createElement('div');
+  d.className = 'sq ' + ((f + r) % 2 ? 'l' : 'd');
+  boardEl.appendChild(d);
+  sqEls[sq] = d;
+}
+let curPly = -1;
+function renderPly(ply) {
+  if (ply === curPly) return;
+  curPly = ply;
+  const st = STATES[ply], last = LAST[ply];
+  for (const sq in sqEls) {
+    const el = sqEls[sq], pc = st[sq];
+    el.innerHTML = pc ? '<span class="pc ' + pc[0] + '">' + GLYPH[pc] + '</span>' : '';
+    el.classList.toggle('from', !!last && last[0] === sq);
+    el.classList.toggle('to', !!last && last[1] === sq);
   }
+  // panel
+  if (ply === 0) {
+    cinMove.innerHTML = '♞<span class="who">Scroll to play</span>';
+    cinTape.textContent = '1. e4 d6 2. d4 Nf6 3. Nc3 g6 …';
+  } else {
+    const mvNum = Math.ceil(ply / 2), white = ply % 2 === 1;
+    cinMove.innerHTML = mvNum + '. ' + (white ? '' : '… ') + SAN[ply-1] +
+      '<span class="who">' + (white ? 'White · Kasparov' : 'Black · Topalov') + '</span>';
+    let tape = '';
+    for (let i = Math.max(0, ply - 6); i < ply; i++) {
+      const n = Math.ceil((i + 1) / 2);
+      tape += (i % 2 === 0 ? n + '. ' : '') + (i === ply - 1 ? '<b>' + SAN[i] + '</b>' : SAN[i]) + ' ';
+    }
+    cinTape.innerHTML = tape + (ply === 87 ? ' <b>1–0</b>' : '…');
+  }
+  // phase copy
+  const phase = PHASES.find(p => ply <= p.until) || PHASES[PHASES.length - 1];
+  if (phase !== curPhase) {
+    curPhase = phase;
+    cinEyebrow.textContent = phase.eb;
+    cinTitle.innerHTML = phase.t;
+    cinText.textContent = phase.x;
+  }
+}
+const cinMove = document.getElementById('cinMove'),
+      cinTape = document.getElementById('cinTape'),
+      cinEyebrow = document.getElementById('cinEyebrow'),
+      cinTitle = document.getElementById('cinTitle'),
+      cinText = document.getElementById('cinText'),
+      cinHint = document.getElementById('cinHint'),
+      cinFill = document.getElementById('cinFill');
+let curPhase = null;
+const PHASES = [
+  { until: 0,  eb: '03 · CHESS — THE GAME BENEATH THE GAME', t: 'A <em>life</em> in 64 squares.', x: 'This is the greatest attacking game ever played — Kasparov v. Topalov, 1999. Scroll, and it unfolds move by move. Every principle I live by, I first learned on a board like this one.' },
+  { until: 14, eb: 'THE OPENING · MOVES 1–7', t: '<em>Develop</em> before you attack.', x: 'Kasparov builds quietly — knights out, bishops working, no fireworks. Premature aggression loses to patient preparation. Build the foundation first; the opportunities reveal themselves.' },
+  { until: 26, eb: 'PREPARATION · MOVES 8–13', t: 'Play for <em>position,</em> not points.', x: 'Both kings castle long and the real game begins beneath the surface. The strongest moves often look quiet — real advantage compounds invisibly until it becomes irreversible.' },
+  { until: 45, eb: 'THE SQUEEZE · MOVES 14–23', t: 'Every move <em>costs</em> something.', x: 'There are no free moves. Each choice creates new constraints, new weaknesses, new commitments. Kasparov accepts his costs deliberately. Topalov drifts. The discipline is in choosing well.' },
+  { until: 53, eb: 'THE SACRIFICE · MOVE 24 — Rxd4!!', t: 'The <em>immortal</em> sacrifice.', x: 'Kasparov gives away an entire rook — then a second exchange — for nothing visible. No engine line, no safety net. Just calculation, conviction, and the courage to trust both. This is the most famous combination in modern chess.' },
+  { until: 70, eb: 'THE KING HUNT · MOVES 28–36', t: 'See the <em>whole</em> board.', x: 'Topalov’s king is dragged from b8 all the way to c3 — across the entire board, through a storm of quiet checks. Chess does not teach you to win. It teaches you to see everything at once, and weigh trade-offs honestly.' },
+  { until: 87, eb: 'CONVERSION · MOVES 37–44', t: '<em>Endgame</em> thinking from move one.', x: 'The fireworks resolve into a calmly winning position, and Topalov resigns. The opening shaped the middlegame, which shaped this. Always be playing the position you are building toward. 1–0.' }
+];
+renderPly(0);
 
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('section, .section-divider, h2.section-h, .section-lede, .dossier, .academic-grid, .chess-grid, .physical-grid, .physical-narrative, .timeline, .library-grid, .featured-essay, .universities, .career-roadmap, .writing-index, .contact-grid');
-  reveals.forEach(el => el.classList.add('reveal'));
+/* ---------- SCROLL ENGINE (rAF) ---------- */
+const cinema = document.getElementById('cinema');
+const mani = document.getElementById('manifesto');
+const maniTextEl = document.getElementById('maniText');
+const pillars = document.getElementById('pillars');
+const library = document.getElementById('library');
+const libTrack = document.getElementById('libTrack');
+const libFill = document.getElementById('libFill');
+const timeline = document.getElementById('timeline');
+const railFill = document.getElementById('railFill');
+const plxEls = Array.from(document.querySelectorAll('[data-plx]'));
+const mobile = () => innerWidth <= 700;
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
+// split manifesto into word spans
+(function splitMani() {
+  const walk = node => {
+    Array.from(node.childNodes).forEach(ch => {
+      if (ch.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        ch.textContent.split(/\s+/).filter(Boolean).forEach(w => {
+          const s = document.createElement('span');
+          s.className = 'w'; s.textContent = w;
+          frag.appendChild(s); frag.appendChild(document.createTextNode(' '));
+        });
+        node.replaceChild(frag, ch);
+      } else if (ch.nodeType === 1 && ch.dataset.x) {
+        const cls = ch.dataset.x;
+        const words = ch.textContent.split(/\s+/).filter(Boolean);
+        const frag = document.createDocumentFragment();
+        words.forEach(w => {
+          const s = document.createElement('span');
+          s.className = 'w ' + cls; s.textContent = w;
+          frag.appendChild(s); frag.appendChild(document.createTextNode(' '));
+        });
+        node.replaceChild(frag, ch);
       }
     });
-  }, { threshold: 0.05 });
+  };
+  walk(maniTextEl);
+})();
+const maniWords = Array.from(maniTextEl.querySelectorAll('.w'));
 
-  reveals.forEach(el => obs.observe(el));
+function sectionProgress(el) {
+  const r = el.getBoundingClientRect();
+  const total = r.height - innerHeight;
+  if (total <= 0) return r.top < innerHeight * 0.5 ? 1 : 0;
+  return clamp(-r.top / total, 0, 1);
+}
 
-  // Chess board — a real game position (Kasparov v Topalov 1999, after move 24)
-  const board = document.getElementById('chessBoard');
-  const position = [
-    ['','','','','','','k',''],   // 8
-    ['','','','p','','','p','p'], // 7
-    ['','','p','','p','','','P'], // 6
-    ['','','P','','','p','','q'], // 5
-    ['','','P','','P','P','','R'], // 4
-    ['','','','','','','','B'],   // 3
-    ['','','','','','','','P'],   // 2
-    ['','','','','','','','K']    // 1
-  ];
-  const symbols = { 'K':'♔','Q':'♕','R':'♖','B':'♗','N':'♘','P':'♙',
-                    'k':'♚','q':'♛','r':'♜','b':'♝','n':'♞','p':'♟' };
-  const highlightSquares = [[4,7],[3,7]]; // Knight tour
+let lastY = -1;
+function frame() {
+  const y = scrollY;
+  if (y !== lastY || true) {
+    lastY = y;
+    // progress bar + nav
+    const doc = document.documentElement;
+    bar.style.transform = 'scaleX(' + (y / (doc.scrollHeight - innerHeight)) + ')';
+    nav.classList.toggle('scrolled', y > 40);
 
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-      const sq = document.createElement('div');
-      const isLight = (row + col) % 2 === 0;
-      sq.className = 'sq ' + (isLight ? 'l' : 'd');
-      const piece = position[row][col];
-      if (piece) {
-        const isWhite = piece === piece.toUpperCase();
-        sq.innerHTML = `<span class="${isWhite ? 'p-w' : 'p-b'}">${symbols[piece]}</span>`;
-      }
-      if (highlightSquares.some(h => h[0] === row && h[1] === col)) {
-        sq.innerHTML += '<span class="highlight"></span>';
-      }
-      board.appendChild(sq);
+    // manifesto
+    const mp = sectionProgress(mani);
+    if (mp > 0 && mp <= 1) {
+      const lit = Math.floor(mp * 1.25 * maniWords.length);
+      maniWords.forEach((w, i) => w.classList.toggle('lit', i < lit));
+      pillars.classList.toggle('show', mp > 0.72);
+    }
+
+    // cinema
+    const cp = sectionProgress(cinema);
+    renderPly(Math.round(cp * 87));
+    cinFill.style.height = (cp * 100) + '%';
+    cinHint.classList.toggle('gone', cp > 0.04 || cp === 0 && false);
+    if (cp === 0) cinHint.classList.remove('gone');
+
+    // library horizontal
+    if (!mobile()) {
+      const lp = sectionProgress(library);
+      const max = libTrack.scrollWidth - innerWidth;
+      libTrack.style.transform = 'translateX(' + (-lp * Math.max(0, max)) + 'px)';
+      libFill.style.width = (lp * 100) + '%';
+    } else {
+      libTrack.style.transform = 'none';
+    }
+
+    // timeline rail
+    const tr = timeline.getBoundingClientRect();
+    const tp = clamp((innerHeight * 0.8 - tr.top) / tr.height, 0, 1);
+    railFill.style.height = (tp * 100) + '%';
+
+    // parallax
+    if (!reduced && !mobile()) {
+      plxEls.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const c = (r.top + r.height / 2 - innerHeight / 2);
+        el.style.translate = '0 ' + (c * -parseFloat(el.dataset.plx)).toFixed(1) + 'px';
+      });
     }
   }
+  requestAnimationFrame(frame);
+}
+if (!reduced) requestAnimationFrame(frame);
+else {
+  // reduced motion: static finale — the famous position after 24.Rxd4
+  renderPly(47);
+  maniWords.forEach(w => w.classList.add('lit'));
+  pillars.classList.add('show');
+  railFill.style.height = '100%';
+}
+
+/* ---------- BEFORE / AFTER SLIDER ---------- */
+const ba = document.getElementById('baSlider');
+const baRange = ba.querySelector('input');
+function setBA(v) { ba.style.setProperty('--x', v + '%'); }
+baRange.addEventListener('input', () => setBA(baRange.value));
+setBA(50);
+
+/* ---------- MAGNETIC CTA ---------- */
+if (fine && !reduced) {
+  document.querySelectorAll('[data-magnet]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.transform = 'translate(' + (e.clientX - r.left - r.width/2) * 0.22 + 'px,' + (e.clientY - r.top - r.height/2) * 0.32 + 'px)';
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+}
+
+/* ---------- HERO DUST PARTICLES ---------- */
+const dust = document.getElementById('dust');
+if (!reduced) {
+  const ctx = dust.getContext('2d');
+  let W, H, ps = [], run = true;
+  function sizeDust() {
+    W = dust.width = dust.offsetWidth * devicePixelRatio;
+    H = dust.height = dust.offsetHeight * devicePixelRatio;
+  }
+  sizeDust(); addEventListener('resize', sizeDust);
+  const N = innerWidth < 700 ? 30 : 70;
+  for (let i = 0; i < N; i++) ps.push({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.6 + 0.4,
+    s: Math.random() * 0.00022 + 0.00006,
+    w: Math.random() * Math.PI * 2,
+    a: Math.random() * 0.5 + 0.15
+  });
+  new IntersectionObserver(es => { run = es[0].isIntersecting; }).observe(dust);
+  (function dustLoop(t) {
+    if (run) {
+      ctx.clearRect(0, 0, W, H);
+      ps.forEach(p => {
+        p.y -= p.s; p.w += 0.012;
+        if (p.y < -0.02) { p.y = 1.02; p.x = Math.random(); }
+        const x = (p.x + Math.sin(p.w) * 0.012) * W;
+        ctx.beginPath();
+        ctx.arc(x, p.y * H, p.r * devicePixelRatio, 0, 7);
+        ctx.fillStyle = 'rgba(212,169,78,' + (p.a * (0.6 + 0.4 * Math.sin(p.w * 2))) + ')';
+        ctx.fill();
+      });
+    }
+    requestAnimationFrame(dustLoop);
+  })();
+}
+
+/* ---------- AMBITION STARFIELD ---------- */
+const stars = document.getElementById('stars');
+if (!reduced) {
+  const sctx = stars.getContext('2d');
+  let sW, sH, field = [], srun = false;
+  function sizeStars() {
+    sW = stars.width = stars.offsetWidth * devicePixelRatio;
+    sH = stars.height = stars.offsetHeight * devicePixelRatio;
+  }
+  sizeStars(); addEventListener('resize', sizeStars);
+  for (let i = 0; i < 150; i++) field.push({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.1 + 0.3,
+    p: Math.random() * Math.PI * 2,
+    v: Math.random() * 0.018 + 0.004
+  });
+  new IntersectionObserver(es => { srun = es[0].isIntersecting; }).observe(stars);
+  (function starLoop() {
+    if (srun) {
+      sctx.clearRect(0, 0, sW, sH);
+      field.forEach(s => {
+        s.p += s.v;
+        const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(s.p));
+        sctx.beginPath();
+        sctx.arc(s.x * sW, s.y * sH, s.r * devicePixelRatio, 0, 7);
+        sctx.fillStyle = 'rgba(240,231,211,' + (tw * 0.55) + ')';
+        sctx.fill();
+      });
+    }
+    requestAnimationFrame(starLoop);
+  })();
+}
+})();
 </script>
-
 </body>
 </html>
