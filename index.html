@@ -723,7 +723,9 @@ footer .f-ver { font-family: var(--mono); font-size: 8px; letter-spacing: 0.25em
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var IS_MOBILE = window.matchMedia('(max-width: 768px)').matches;
-  var FRAME_COUNT = 120;
+  // Mobile carries all 240 source frames (24fps x 10s): slow thumb-scrubbing
+  // steps through motion twice as finely, which is what kills the judder.
+  var FRAME_COUNT = IS_MOBILE ? 240 : 120;
   var FRAME_DIR = IS_MOBILE ? 'frames/mobile/' : 'frames/desktop/';
   // Touch scrolling is precise and slow, so mobile gets a tighter LERP (frame
   // tracks the finger, no rubber-band trail) and gentler dwell (less sticky).
