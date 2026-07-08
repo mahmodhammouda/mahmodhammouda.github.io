@@ -185,6 +185,10 @@ body {
 
 /* ---------- animation section ---------- */
 #animation-section { position: relative; height: 650vh; }
+@media (max-width: 768px) {
+  /* shorter track on touch: more frames per swipe = video-like motion */
+  #animation-section { height: 450vh; }
+}
 #canvas-container { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 #frame-canvas { width: 100%; height: 100%; display: block; }
 .canvas-overlay { position: absolute; inset: 0; pointer-events: none; }
@@ -375,8 +379,12 @@ body {
 }
 .btn-primary { background: var(--accent); color: var(--ink); }
 .btn-primary:hover { background: var(--warm-white); box-shadow: 0 0 30px var(--accent-glow); }
-.btn-outline { border-color: rgba(244,240,234,0.25); color: var(--warm-white); background: transparent; }
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-outline {
+  border-color: rgba(200,152,72,0.65); color: var(--warm-white);
+  background: rgba(14,13,12,0.6);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(14,13,12,0.75); }
 .cta-links { margin-top: 30px; display: flex; gap: 26px; justify-content: center; flex-wrap: wrap; }
 .cta-links a {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
@@ -518,6 +526,20 @@ footer .f-ver { font-family: var(--mono); font-size: 8px; letter-spacing: 0.25em
   #particles, #cursor-dot, #cursor-ring { display: none; }
   .scroll-text, .g-item { transition: none; }
   #st-hero .hero-title span { animation: none; opacity: 1; transform: none; }
+}
+
+/* ---------- mobile performance: cheaper compositing ---------- */
+@media (max-width: 768px) {
+  /* backdrop-filter over a repainting canvas is a GPU killer on phones */
+  .stat-bar, .glass-cell, .quest-main, .contact-card {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: rgba(19, 17, 15, 0.82);
+  }
+  /* blur() transitions jank mid-scroll on mobile — fade/slide only */
+  .scroll-text { filter: none; }
+  .scroll-text.visible { filter: none; }
+  #particles { display: none; }
+  #grain { opacity: 0.025; }
 }
 </style>
 </head>
@@ -703,10 +725,12 @@ footer .f-ver { font-family: var(--mono); font-size: 8px; letter-spacing: 0.25em
   var IS_MOBILE = window.matchMedia('(max-width: 768px)').matches;
   var FRAME_COUNT = 120;
   var FRAME_DIR = IS_MOBILE ? 'frames/mobile/' : 'frames/desktop/';
-  var LERP_FACTOR = 0.09;
+  // Touch scrolling is precise and slow, so mobile gets a tighter LERP (frame
+  // tracks the finger, no rubber-band trail) and gentler dwell (less sticky).
+  var LERP_FACTOR = IS_MOBILE ? 0.16 : 0.09;
   var DWELL_CENTERS = [0.065, 0.22, 0.395, 0.565, 0.735, 0.92];
   var DWELL_WIDTH = 0.045;
-  var DWELL_PEAK = 3.5;
+  var DWELL_PEAK = IS_MOBILE ? 2.2 : 3.5;
   var REMAP_N = 2000;
 
   /* ---------- custom cursor ---------- */
@@ -810,7 +834,9 @@ footer .f-ver { font-family: var(--mono); font-size: 8px; letter-spacing: 0.25em
   /* ---------- canvas + frames ---------- */
   var canvas = document.getElementById('frame-canvas');
   var ctx = canvas.getContext('2d');
-  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  // Phones: 1.5x is visually indistinguishable on a moving canvas and
+  // cuts per-frame pixel work nearly in half vs 2x.
+  var DPR = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
   var frames = new Array(FRAME_COUNT);
   var loadedCount = 0;
   var section = document.getElementById('animation-section');
